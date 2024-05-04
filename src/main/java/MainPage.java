@@ -1,10 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainPage extends JFrame{
     private JPanel mainPanel;
+    private JButton requisiçõesButton;
+    private JButton sóciosButton;
+    private JButton publicaçõesButton;
+    private JButton fornecedoresButton;
+    private JButton definiçõesButton;
 
     public MainPage() {
         super("Main");

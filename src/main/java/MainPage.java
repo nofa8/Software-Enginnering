@@ -3,11 +3,13 @@ import java.awt.*;
 
 public class MainPage extends JFrame{
     private JPanel mainPanel;
-    private JButton requisiçõesButton;
+    private JButton casaButton;
     private JButton sóciosButton;
+    private JButton empréstimosButton;
     private JButton publicaçõesButton;
-    private JButton fornecedoresButton;
-    private JButton definiçõesButton;
+    private JButton configuraçõesButton;
+    private JButton button1;
+    private JButton sairButton;
 
     public MainPage() {
         super("Main");

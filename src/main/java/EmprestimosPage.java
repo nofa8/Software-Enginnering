@@ -77,7 +77,7 @@ public class EmprestimosPage extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Emprestimo emprestimo = new Emprestimo(new Exemplar("123456", new Obra("Queixo no Soco", List.of("ola"),Genero.AVENTURA, Subgenero.DISTOPIA,
-                        "Editora", 1234,2015,"dfegr", Estantes.ESTANTE_1A,Prateleiras.PRATELEIRA_1,Salas.SALA_101)),
+                        Editora.HACHETTE_BOOK_GROUP, 1234,2015,"dfegr", Estantes.ESTANTE_1A,Prateleiras.PRATELEIRA_1,Salas.SALA_101,Distribuidor.ALMEDINA)),
                         new Socio("Rei","123456778","dfeghrtj", "91972345", "arroz@mail.com",12),12);
                 String detalhesEmprestimo = emprestimo.getSocio().getNumero() +
                         " | " + emprestimo.getExemplar().getObra().getTitulo() + " - " + emprestimo.getExemplar().getCodigo() +

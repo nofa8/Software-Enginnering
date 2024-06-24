@@ -75,13 +75,9 @@ public class AppData implements Serializable{
 
     public LinkedList<Emprestimo> getEmprestimos() {
         if(this.emprestimos == null){
-            this.emprestimos = new LinkedList<Emprestimo>();
+            this.emprestimos = new LinkedList<>();
         }
-        Emprestimo emprestimo = new Emprestimo(new Exemplar("123456", new Obra("Queixo no Soco", List.of("ola"),Genero.AVENTURA, Subgenero.DISTOPIA,
-                "Editora", 1234,2015,"dfegr", Estantes.ESTANTE_1A,Prateleiras.PRATELEIRA_1,Salas.SALA_101)),
-                new Socio("Rei","123456778","dfeghrtj", "91972345", "arroz@mail.com",12),12);
-        emprestimos.add(emprestimo);
-        return emprestimos;
+        return new LinkedList<>(emprestimos);
     }
 
     public int getDuracaoEmprestimo() {

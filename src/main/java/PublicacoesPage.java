@@ -94,13 +94,14 @@ public class PublicacoesPage extends JFrame{
                         autores,
                         Genero.ROMANCE,
                         Subgenero.ARTE_MODERNA,
-                        "Editora Exemplo",
+                        Editora.CAMBRIDGE_UNIVERSITY_PRESS,
                         45641,
                         2023,
                         "123-4567890123",
                         Estantes.ESTANTE_1A,
                         Prateleiras.PRATELEIRA_1,
-                        Salas.SALA_101
+                        Salas.SALA_101,
+                        Distribuidor.BERTRAND
                 );
 
                 AppData.getInstance().adicionarObra(obra);
@@ -135,17 +136,14 @@ public class PublicacoesPage extends JFrame{
 
                 if (selectedIndex != -1) { // Check if any item is selected
                     // Get the selected item (details of obra) from the DefaultListModel
-                    String selectedObraDetails = listModel.getElementAt(selectedIndex);
+                    Obra obra = obras.get(selectedIndex);
+                    if (obra == null){
 
-                    // Extract the "estante" information from the selectedObraDetails
-                    String[] parts = selectedObraDetails.split("\\|"); // Split by '|'
-                    String estante = parts[0].trim(); // Assuming "estante" is the third part
 
-                    // Show a message dialog with the "estante" information
-                    JOptionPane.showMessageDialog(PublicacoesPage.this,
-                            "Estante da Obra Selecionada: " + estante.trim(),
-                            "Detalhes da Estante",
-                            JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                    }
+                    new VisualizarPublicacao(obra);
+
                 } else {
                     // If no item is selected, show an error message
                     JOptionPane.showMessageDialog(PublicacoesPage.this,

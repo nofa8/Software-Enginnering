@@ -11,17 +11,18 @@ public class Obra implements Serializable {
     private List<String> autores;
     private Genero genero;
     private Subgenero subgenero;
-    private String editora;
+    private Editora editora;
     private int numeroEdicao;
     private int ano;
+    private Distribuidor distribuidor;
     private String ISBN;
     private Estantes estante;
     private Prateleiras prateleira;
     private Salas sala;
     private List<Exemplar> exemplares;
     public Obra(String titulo, List<String> autores, Genero genero, Subgenero subgenero,
-                String editora, int numeroEdicao, int ano, String ISBN,
-                Estantes estante, Prateleiras prateleira, Salas sala) {
+                Editora editora, int numeroEdicao, int ano, String ISBN,
+                Estantes estante, Prateleiras prateleira, Salas sala, Distribuidor distribuidor) {
         this.titulo = titulo;
         this.autores = autores;
         this.genero = genero;
@@ -34,6 +35,7 @@ public class Obra implements Serializable {
         this.prateleira = prateleira;
         this.sala = sala;
         this.exemplares = new ArrayList<>();
+        this.distribuidor = distribuidor;
     }
 
     public void adicionarExemplar(Exemplar exemplar) {
@@ -73,11 +75,11 @@ public class Obra implements Serializable {
         this.subgenero = subgenero;
     }
 
-    public String getEditora() {
+    public Editora getEditora() {
         return editora;
     }
 
-    public void setEditora(String editora) {
+    public void setEditora(Editora editora) {
         this.editora = editora;
     }
 
@@ -130,22 +132,24 @@ public class Obra implements Serializable {
     }
 
     public List<Exemplar> getExemplares() {
-        return exemplares;
+        return new ArrayList<>(exemplares);
     }
 
     public void setExemplares(List<Exemplar> exemplares) {
         this.exemplares = exemplares;
     }
 
-    // Add other getters and setters as needed
+    public Distribuidor getDistribuidor() {
+        return distribuidor;
+    }
+    public int getQuantidade(){
+        return exemplares.size();
 
+    }
 
-
-
-    /*
-    public void getQuantExemplares(){
-        return
-    }*/
+    public void setDistribuidor(Distribuidor distribuidor) {
+        this.distribuidor = distribuidor;
+    }
 
     @Override
     public String toString() {

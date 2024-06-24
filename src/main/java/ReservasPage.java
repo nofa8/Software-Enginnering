@@ -32,35 +32,11 @@ public class ReservasPage extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        requisicoesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                EmprestimosPage.showReqPage();
 
-            }
-        });
-        publicacoesButton.addActionListener(new ActionListener() {
+        voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PublicacoesPage.showPubPage();
-            }
-        });
-        sociosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SociosPage.showSocPage();
-            }
-        });
-        paginaPrincipalButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Casa.showCasaPage();
-            }
-        });
-        definicoesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ConfiguracoesPage.showConfPage();
+                mainFrame.show(false);
             }
         });
     }

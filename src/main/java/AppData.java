@@ -18,6 +18,7 @@ public class AppData implements Serializable{
     private LinkedList<Obra> obras; //???
     private HashMap<Integer, Socio> socios; //???
     private LinkedList<Emprestimo> emprestimos;
+    private LinkedList<Reserva> reservas;
 
 
     private AppData() {
@@ -77,7 +78,7 @@ public class AppData implements Serializable{
         if(this.emprestimos == null){
             this.emprestimos = new LinkedList<>();
         }
-        return new LinkedList<>(emprestimos);
+        return emprestimos;
     }
 
     public int getDuracaoEmprestimo() {
@@ -135,5 +136,14 @@ public class AppData implements Serializable{
             return;
         }
         obras.add(obra);
+    }
+
+    public LinkedList<Reserva> getReservas() {
+        if(this.reservas == null){
+            this.reservas = new LinkedList<Reserva>();
+        }
+
+        return reservas;
+
     }
 }

@@ -48,7 +48,6 @@ public class EmprestimosPage extends JFrame{
         listEmprestimos.setModel(listModel);
 
 
-
         publicacoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,6 +116,20 @@ public class EmprestimosPage extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 ReservasPage.showReqPage();
+            }
+        });
+        visualizarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(listEmprestimos.getSelectedIndex() == -1){
+                    JOptionPane.showMessageDialog(EmprestimosPage.this,
+                            "Selecione um empréstimo!\n");
+                    return;
+                }
+                int indice = listEmprestimos.getSelectedIndex();
+                LinkedList<Emprestimo> emprestimos = AppData.getInstance().getEmprestimos();
+                Emprestimo emprestimo = emprestimos.get(indice);
+                VisualizarEmprestimo.showReqPage(emprestimo);
             }
         });
     }

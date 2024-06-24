@@ -16,7 +16,6 @@ public class AppData implements Serializable{
     private float anualidade;
     private LinkedList<Obra> obras; //???
     private HashMap<Integer, Socio> socios; //???
-
     private LinkedList<Emprestimo> emprestimos;
 
 
@@ -52,6 +51,7 @@ public class AppData implements Serializable{
                 this.anualidade = loadedData.anualidade;
                 this.obras = loadedData.obras;
                 this.socios = loadedData.socios;
+                this.emprestimos = loadedData.emprestimos;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 // Initialize with default values if loading fails
@@ -129,4 +129,10 @@ public class AppData implements Serializable{
         socio.pagarDivida(socio.getValorEmDivida());
     }
 
+    public void adicionarObra(Obra obra) {
+        if (obra == null) {
+            return;
+        }
+        obras.add(obra);
+    }
 }

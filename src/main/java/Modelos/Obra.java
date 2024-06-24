@@ -2,6 +2,7 @@ package Modelos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Obra implements Serializable {
@@ -18,7 +19,6 @@ public class Obra implements Serializable {
     private Prateleiras prateleira;
     private Salas sala;
     private List<Exemplar> exemplares;
-
     public Obra(String titulo, List<String> autores, Genero genero, Subgenero subgenero,
                 String editora, int numeroEdicao, int ano, String ISBN,
                 Estantes estante, Prateleiras prateleira, Salas sala) {

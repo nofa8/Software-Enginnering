@@ -1,7 +1,10 @@
 import Modelos.*;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.*;
@@ -30,7 +33,7 @@ public class PublicacoesPage extends JFrame{
     private JList list1;
     private int width;
     private int height;
-
+    private static LinkedList<Obra> obras = null;
 
     private DefaultListModel<String> listModel;//apagar
 
@@ -47,6 +50,12 @@ public class PublicacoesPage extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                atualizarObras();
+            }
+        });
 
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
@@ -93,6 +102,8 @@ public class PublicacoesPage extends JFrame{
                         Prateleiras.PRATELEIRA_1,
                         Salas.SALA_101
                 );
+
+                AppData.getInstance().adicionarObra(obra);
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String dataFormatada = dateFormat.format(new Date());
@@ -163,14 +174,54 @@ public class PublicacoesPage extends JFrame{
                 }
             }
         });
+        atualizar();
     }
+    private static void atualizarObras(){
+        obras = AppData.getInstance().getObras();
+        SwingUtilities.invokeLater(() -> {
+            if (mainFrame != null) {
+                mainFrame.atualizar();
+            }
+        });
+    }
+    private void atualizar(){
+        listModel = new DefaultListModel<>();
+        list1.setModel(listModel);
+//        listModel.addElement("\tNºEdição\t\tObra\t\tAno");
+        if (obras == null){
+            return;
+        }
+        for(Obra obra : obras){
+            // Adicionando os detalhes da obra à JList
+            String detalhesObra = "";
+            int value = Math.min(40,Integer.toString(obra.getNumeroEdicao()).length());
+            for (int i = 0; i < 30- value; i++){
+                detalhesObra += " ";
+            }
+            detalhesObra += obra.getNumeroEdicao() + " | ";
+            value = Math.min(60,obra.getTitulo().length());
+            for (int i = 0; i < 60- value; i++){
+                detalhesObra += " ";
+            }
+            detalhesObra += obra.getTitulo()+" | ";
+            value = Math.min(60,Integer.toString(obra.getAno()).length());
+            for (int i = 0; i < 60- value; i++){
+                detalhesObra += " ";
+            }
+            listModel.addElement(detalhesObra);
+        }
+
+    }
+
     public static void showPubPage() {
         if (mainFrame == null) {
             mainFrame = new PublicacoesPage();
         }
         if (!mainFrame.isVisible()) {
+            atualizarObras();
             mainFrame.setVisible(true);
         } else {
+            atualizarObras();
             mainFrame.toFront();
         }
     }

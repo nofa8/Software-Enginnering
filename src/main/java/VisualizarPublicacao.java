@@ -19,7 +19,7 @@ public class VisualizarPublicacao extends JFrame{
     private JLabel autor;
     private JLabel genero;
     private JLabel subgenero;
-    private JLabel criacao;
+    private JLabel ano;
     private JLabel sala;
     private JLabel estante;
     private JLabel prateleira;

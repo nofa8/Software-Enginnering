@@ -35,7 +35,7 @@ public class PublicacoesPage extends JFrame{
     private int height;
     private static LinkedList<Obra> obras = null;
 
-    private DefaultListModel<String> listModel;//apagar
+    private DefaultListModel<String> listModel;
 
 
     public PublicacoesPage() {

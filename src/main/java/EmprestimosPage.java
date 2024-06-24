@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -31,8 +33,9 @@ public class EmprestimosPage extends JFrame{
     private DefaultListModel<String> listModel;
     private int width;
     private int height;
+    private static LinkedList<Emprestimo> emprestimos = null;
     public EmprestimosPage() {
-        super("Bought Page");
+        super("Empréstimos");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -43,9 +46,12 @@ public class EmprestimosPage extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
-        listModel = new DefaultListModel<>();
-        listEmprestimos.setModel(listModel);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                atualizarEmprestimos();
+            }
+        });
 
 
         publicacoesButton.addActionListener(new ActionListener() {
@@ -75,18 +81,7 @@ public class EmprestimosPage extends JFrame{
         criarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Emprestimo emprestimo = new Emprestimo(new Exemplar("123456", new Obra("Queixo no Soco", List.of("ola"),Genero.AVENTURA, Subgenero.DISTOPIA,
-                        Editora.HACHETTE_BOOK_GROUP, 1234,2015,"dfegr", Estantes.ESTANTE_1A,Prateleiras.PRATELEIRA_1,Salas.SALA_101,Distribuidor.ALMEDINA)),
-                        new Socio("Rei","123456778","dfeghrtj", "91972345", "arroz@mail.com",12),12);
-                String detalhesEmprestimo = emprestimo.getSocio().getNumero() +
-                        " | " + emprestimo.getExemplar().getObra().getTitulo() + " - " + emprestimo.getExemplar().getCodigo() +
-                        " | " + emprestimo.getDataEmprestimo();
-
-
-                listModel.addElement(detalhesEmprestimo);
-
-                JOptionPane.showMessageDialog(EmprestimosPage.this,
-                        "Emprestimos criados com sucesso!\n");
+                CriarEmprestimo.showCriarEmpPage();
             }
         });
         devolverButton.addActionListener(new ActionListener() {
@@ -132,6 +127,45 @@ public class EmprestimosPage extends JFrame{
                 VisualizarEmprestimo.showReqPage(emprestimo);
             }
         });
+        atualizar();
+    }
+    private static void atualizarEmprestimos(){
+        emprestimos = AppData.getInstance().getEmprestimos();
+        SwingUtilities.invokeLater(() -> {
+            if (mainFrame != null) {
+                mainFrame.atualizar();
+            }
+        });
+    }
+    private void atualizar(){
+        listModel = new DefaultListModel<>();
+        listEmprestimos.setModel(listModel);
+        if ( emprestimos == null){
+            return;
+        }
+        for(Emprestimo emprestimo : emprestimos){
+            listModel.addElement(formatar(emprestimo));
+        }
+
+    }
+    private String formatar(Emprestimo emprestimo){
+        String detalhesEmprestimo = "";
+        int value = Math.min(34,Integer.toString(emprestimo.getSocio().getNumero()).length());
+        for (int i = 0; i < 35- value; i++){
+            detalhesEmprestimo += " ";
+        }
+        detalhesEmprestimo += emprestimo.getExemplar().getObra().getTitulo() + " - "+ emprestimo.getExemplar().getCodigo() + "  ";
+        value = Math.min(64,(emprestimo.getExemplar().getObra().getTitulo() + " - "+ emprestimo.getExemplar().getCodigo()).length());
+        for (int i = 0; i < 65- value; i++){
+            detalhesEmprestimo += " ";
+        }
+        detalhesEmprestimo += emprestimo.getDataEmprestimo()+"   ";
+        value = Math.min(64,(emprestimo.getDataEmprestimo().toString()).length());
+        for (int i = 0; i < 65- value; i++){
+            detalhesEmprestimo += " ";
+        }
+
+        return detalhesEmprestimo;
     }
     public static void showReqPage() {
         if (mainFrame == null) {
@@ -143,4 +177,5 @@ public class EmprestimosPage extends JFrame{
             mainFrame.toFront();
         }
     }
+
 }

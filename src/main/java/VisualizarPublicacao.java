@@ -1,33 +1,31 @@
+import Modelos.Obra;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VisualizarPublicacao extends JFrame{
+    private static VisualizarPublicacao me;
     private JPanel mainPanel;
-    private JButton requisicoesButton;
-    private JButton sociosButton;
-    private JButton publicacoesButton;
-    private JButton definicoesButton;
-    private JButton paginaPrincipalButton;
     private JButton voltarButton;
     private JButton editarButton;
     private JLabel edicao;
     private JLabel isbn;
     private JLabel editora;
-    private JLabel fornecedor;
+    private JLabel distribuidor;
     private JLabel autor;
     private JLabel genero;
     private JLabel subgenero;
-    private JLabel criacao;
+    private JLabel ano;
     private JLabel sala;
     private JLabel estante;
     private JLabel prateleira;
     private JLabel quantidade;
     private int width;
     private int height;
-    public VisualizarPublicacao() {
-        super("Visualizar Publicacao");
+    public VisualizarPublicacao(Obra obra) {
+        super("Visualizar Obra");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -39,37 +37,41 @@ public class VisualizarPublicacao extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        requisicoesButton.addActionListener(new ActionListener() {
+        me = this;
+        atualizarObra(obra);
+        voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EmprestimosPage.showReqPage();
-
-            }
-        });
-        publicacoesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                PublicacoesPage.showPubPage();
-            }
-        });
-        sociosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SociosPage.showSocPage();
-            }
-        });
-        paginaPrincipalButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Casa.showCasaPage();
-            }
-        });
-        definicoesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ConfiguracoesPage.showConfPage();
+                me.show(false);
+                me.dispose();
             }
         });
     }
-
+    private static void atualizarObra(Obra obra) {
+        // Atualizar os campos do formulário com os dados da obra
+        me.edicao.setText(Integer.toString(obra.getNumeroEdicao()));
+        me.isbn.setText(obra.getISBN());
+        me.editora.setText(obra.getEditora().toString());
+        me.distribuidor.setText(obra.getDistribuidor().toString());
+        me.autor.setText(obra.getAutores().toString());
+        me.genero.setText(obra.getGenero().toString());
+        me.subgenero.setText(obra.getSubgenero().toString());
+        me.ano.setText(String.valueOf(obra.getAno()));
+        me.sala.setText(obra.getSala().toString());
+        me.estante.setText(String.valueOf(obra.getEstante().toString()));
+        me.prateleira.setText(String.valueOf(obra.getPrateleira().toString()));
+        me.quantidade.setText(String.valueOf(obra.getQuantidade()));
+    }
+    public static void showVisPubPage(Obra obra) {
+        if (me == null) {
+            me = new VisualizarPublicacao(obra);
+        }
+        if (!me.isVisible()) {
+            atualizarObra(obra);
+            me.setVisible(true);
+        } else {
+            atualizarObra(obra);
+            me.toFront();
+        }
+    }
 }

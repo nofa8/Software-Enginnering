@@ -17,7 +17,6 @@ public class AppData implements Serializable{
     private float anualidade;
     private LinkedList<Obra> obras; //???
     private HashMap<Integer, Socio> socios; //???
-
     private LinkedList<Emprestimo> emprestimos;
 
 
@@ -53,6 +52,7 @@ public class AppData implements Serializable{
                 this.anualidade = loadedData.anualidade;
                 this.obras = loadedData.obras;
                 this.socios = loadedData.socios;
+                this.emprestimos = loadedData.emprestimos;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 // Initialize with default values if loading fails
@@ -88,13 +88,9 @@ public class AppData implements Serializable{
 
     public LinkedList<Emprestimo> getEmprestimos() {
         if(this.emprestimos == null){
-            this.emprestimos = new LinkedList<Emprestimo>();
+            this.emprestimos = new LinkedList<>();
         }
-        Emprestimo emprestimo = new Emprestimo(new Exemplar("123456", new Obra("Queixo no Soco", List.of("ola"),Genero.AVENTURA, Subgenero.DISTOPIA,
-                "Editora", 1234,2015,"dfegr", Estantes.ESTANTE_1A,Prateleiras.PRATELEIRA_1,Salas.SALA_101)),
-                new Socio("Rei","123456778","dfeghrtj", "91972345", "arroz@mail.com",12),12);
-        emprestimos.add(emprestimo);
-        return emprestimos;
+        return new LinkedList<>(emprestimos);
     }
 
     public int getDuracaoEmprestimo() {
@@ -147,4 +143,10 @@ public class AppData implements Serializable{
         socio.pagarDivida(socio.getValorEmDivida());
     }
 
+    public void adicionarObra(Obra obra) {
+        if (obra == null) {
+            return;
+        }
+        obras.add(obra);
+    }
 }

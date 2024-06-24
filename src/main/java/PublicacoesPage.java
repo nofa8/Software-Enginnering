@@ -1,7 +1,16 @@
+import Modelos.Obra;
+import Modelos.Genero;
+import Modelos.Subgenero;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class PublicacoesPage extends JFrame{
     private static PublicacoesPage mainFrame;
@@ -18,11 +27,16 @@ public class PublicacoesPage extends JFrame{
     private JRadioButton topRequisitadosRadioButton;
     private JComboBox generoDrop;
     private JComboBox subgeneroDrop;
-    private JTable table1;
     private JTextField autorTxt;
     private JButton pesquisarButton;
+    private JList list1;
     private int width;
     private int height;
+
+
+    private DefaultListModel<String> listModel;//apagar
+
+
     public PublicacoesPage() {
         super("Bought Page");
         this.setContentPane(mainPanel);
@@ -60,6 +74,79 @@ public class PublicacoesPage extends JFrame{
                 ConfiguracoesPage.showConfPage();
             }
         });
+
+
+
+
+        criarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<String> autores = Arrays.asList("Joel", "Ellie");
+                Obra obra = new Obra(
+                        "Título da Obra",
+                        autores,
+                        Genero.ROMANCE,
+                        Subgenero.ARTE_MODERNA,
+                        "Editora Exemplo",
+                        45641,
+                        2023,
+                        "123-4567890123",
+                        "Estante A",
+                        "Prateleira 1"
+                );
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String dataFormatada = dateFormat.format(new Date());
+
+                // Adicionando os detalhes da obra à JList
+                String detalhesObra = obra.getNumeroEdicao() +
+                        " | " + obra.getTitulo() +
+                        " | " + dataFormatada;
+                String detalhesObra2 = obra.getNumeroEdicao() +
+                        " | " + obra.getTitulo() +
+                        " | " + dataFormatada;
+
+                listModel = new DefaultListModel<>();
+                list1.setModel(listModel);
+                listModel.addElement(detalhesObra);
+                listModel.addElement(detalhesObra2);
+
+
+                JOptionPane.showMessageDialog(PublicacoesPage.this,
+                        "Obras criadas com sucesso!\n");
+            }
+        });
+
+        visualizarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get the selected index from the JList
+                int selectedIndex = list1.getSelectedIndex();
+
+                if (selectedIndex != -1) { // Check if any item is selected
+                    // Get the selected item (details of obra) from the DefaultListModel
+                    String selectedObraDetails = listModel.getElementAt(selectedIndex);
+
+                    // Extract the "estante" information from the selectedObraDetails
+                    String[] parts = selectedObraDetails.split("\\|"); // Split by '|'
+                    String estante = parts[0].trim(); // Assuming "estante" is the third part
+
+                    // Show a message dialog with the "estante" information
+                    JOptionPane.showMessageDialog(PublicacoesPage.this,
+                            "Estante da Obra Selecionada: " + estante.trim(),
+                            "Detalhes da Estante",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    // If no item is selected, show an error message
+                    JOptionPane.showMessageDialog(PublicacoesPage.this,
+                            "Por favor, selecione uma obra para visualizar a estante.",
+                            "Nenhuma Obra Selecionada",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+
         pesquisarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -56,11 +56,91 @@ public class Obra implements Serializable {
         this.autores = autores;
     }
 
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
+    public Subgenero getSubgenero() {
+        return subgenero;
+    }
+
+    public void setSubgenero(Subgenero subgenero) {
+        this.subgenero = subgenero;
+    }
+
+    public String getEditora() {
+        return editora;
+    }
+
+    public void setEditora(String editora) {
+        this.editora = editora;
+    }
+
+    public int getNumeroEdicao() {
+        return numeroEdicao;
+    }
+
+    public void setNumeroEdicao(int numeroEdicao) {
+        this.numeroEdicao = numeroEdicao;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public String getEstante() {
+        return estante;
+    }
+
+    public void setEstante(String estante) {
+        this.estante = estante;
+    }
+
+    public String getPrateleira() {
+        return prateleira;
+    }
+
+    public void setPrateleira(String prateleira) {
+        this.prateleira = prateleira;
+    }
+
+    public String getSala() {
+        return sala;
+    }
+
+    public void setSala(String sala) {
+        this.sala = sala;
+    }
+
+    public List<Exemplar> getExemplares() {
+        return exemplares;
+    }
+
+    public void setExemplares(List<Exemplar> exemplares) {
+        this.exemplares = exemplares;
+    }
+
     // Add other getters and setters as needed
 
 
 
-    //LUIS
+
     /*
     public void getQuantExemplares(){
         return

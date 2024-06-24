@@ -19,7 +19,7 @@ public class Casa extends JFrame{
     private JButton sairButton;
     private int width;
     private int height;
-    public Casa() {
+    public Casa() { 
         super("Casa");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

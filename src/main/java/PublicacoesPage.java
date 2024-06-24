@@ -88,43 +88,7 @@ public class PublicacoesPage extends JFrame{
         criarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<String> autores = Arrays.asList("Joel", "Ellie");
-                Obra obra = new Obra(
-                        "Título da Obra",
-                        autores,
-                        Genero.ROMANCE,
-                        Subgenero.ARTE_MODERNA,
-                        Editora.CAMBRIDGE_UNIVERSITY_PRESS,
-                        45641,
-                        2023,
-                        "123-4567890123",
-                        Estantes.ESTANTE_1A,
-                        Prateleiras.PRATELEIRA_1,
-                        Salas.SALA_101,
-                        Distribuidor.BERTRAND
-                );
-
-                AppData.getInstance().adicionarObra(obra);
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String dataFormatada = dateFormat.format(new Date());
-
-                // Adicionando os detalhes da obra à JList
-                String detalhesObra = obra.getNumeroEdicao() +
-                        " | " + obra.getTitulo() +
-                        " | " + dataFormatada;
-                String detalhesObra2 = obra.getNumeroEdicao() +
-                        " | " + obra.getTitulo() +
-                        " | " + dataFormatada;
-
-                listModel = new DefaultListModel<>();
-                list1.setModel(listModel);
-                listModel.addElement(detalhesObra);
-                listModel.addElement(detalhesObra2);
-
-
-                JOptionPane.showMessageDialog(PublicacoesPage.this,
-                        "Obras criadas com sucesso!\n");
+                CriarPublicacao.showCriarPubPage();
             }
         });
 

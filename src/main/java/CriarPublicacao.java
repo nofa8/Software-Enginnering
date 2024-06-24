@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class CriarPublicacao extends JFrame{
@@ -39,11 +41,14 @@ public class CriarPublicacao extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
         me = this;
-
-
-
+        genero = new JComboBox(Genero.values());
+        subgenero = new JComboBox(Subgenero.values());
+        editora = new JComboBox(Editora.values());
+        distribuidor = new JComboBox(Distribuidor.values());
+        sala = new JComboBox(Salas.values());
+        estante = new JComboBox(Estantes.values());
+        prateleira = new JComboBox(Prateleiras.values());
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,32 +117,54 @@ public class CriarPublicacao extends JFrame{
                 }
 
 
+                String[] autSplit = aut.split(",");
+                ArrayList<String> listaut = new ArrayList<String>(Arrays.asList(autSplit));
 
+                int numEdicao;
+                try{
+                    numEdicao = Integer.parseInt(ned);
+                }catch (NumberFormatException exception){
+                    JOptionPane.showMessageDialog(me,
+                            "O numero de edição tem que ser um número inteiro positivo!\n");
+                    return;
+                }
 
-                ArrayList<String> listaut = new ArrayList<>();
-                Genero gener = Genero.valueOf(gen);
-                Subgenero subgener = Subgenero.valueOf(subgen);
-                int numEdicao = Integer.parseInt(ned);
-                Estantes estan = Estantes.valueOf(est);
-                Editora edit = Editora.valueOf(edi);
-                Prateleiras prat = Prateleiras.valueOf(pra);
-                Salas salars = Salas.valueOf(sal);
-                int anoo = Integer.parseInt(an);
-                Distribuidor distribuidor = Distribuidor.valueOf(dis);
+                int anoo;
+                try{
+                    anoo = Integer.parseInt(an);
+                }catch (NumberFormatException exception){
+                    JOptionPane.showMessageDialog(me,
+                            "O numero de edição tem que ser um número inteiro positivo!\n");
+                    return;
+                }
+
+                Genero gener;
+                Subgenero subgener;
+                Estantes estan;
+                Editora edit;
+                Prateleiras prat ;
+                Salas salars ;
+                Distribuidor distribuidor;
+                try{
+                    gener = Genero.valueOf(gen);
+                    salars = Salas.valueOf(sal);
+                    prat = Prateleiras.valueOf(pra);
+                    edit = Editora.valueOf(edi);
+                    estan = Estantes.valueOf(est);
+                    subgener = Subgenero.valueOf(subgen);
+                    distribuidor = Distribuidor.valueOf(dis);
+                }catch (IllegalArgumentException exception){
+                    JOptionPane.showMessageDialog(me,
+                            "Ocurreu um erro com os dropdowns!\n");
+                    return;
+                }
+
                 Obra obra = new Obra(tit,listaut, gener,subgener, edit,numEdicao,anoo,is,estan,prat,salars,distribuidor);
+                AppData.getInstance().adicionarObra(obra);
+                JOptionPane.showMessageDialog(null,
+                        "Obra criada com sucesso!\n");
 
-
-//                String titulo,
-//                List<String> autores,
-//                Genero genero,
-//                Subgenero subgenero,
-//                String editora,
-//                int numeroEdicao,
-//                int ano,
-//                String ISBN,
-//                Estantes estante,
-//                Prateleiras prateleira,
-//                Salas sala
+                me.dispose();
             }
         });
     }

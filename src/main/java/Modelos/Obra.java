@@ -58,6 +58,14 @@ public class Obra implements Serializable {
 
     // Add other getters and setters as needed
 
+
+
+    //LUIS
+    /*
+    public void getQuantExemplares(){
+        return
+    }*/
+
     @Override
     public String toString() {
         return "Obra{" +

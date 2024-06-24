@@ -3,7 +3,6 @@ package Modelos;
 import java.time.LocalDate;
 
 public class Reserva {
-
     private Obra obra;
     private Socio socio;
 

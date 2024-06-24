@@ -63,6 +63,19 @@ public class AppData implements Serializable{
         }
     }
 
+    public int adicionarObra(Obra obra) {
+        if (obra == null) {
+            return -1;
+        }
+        for (Obra obraExistente : obras) {
+            if (obraExistente.getISBN() == obra.getISBN()) {
+                return -2;
+            }
+        }
+        obras.add(obra);
+        return 0;
+    }
+
     private void initializeDefaultValues() {
         duracaoEmprestimo = 0;
         limiteEmprestimosSim = 0;

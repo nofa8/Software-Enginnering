@@ -1,6 +1,12 @@
-import Modelos.*;
+import Modelos.Obra;
+import Modelos.Genero;
+import Modelos.Subgenero;
+import Modelos.Salas;
+import Modelos.Prateleiras;
+import Modelos.Estantes;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,9 +36,11 @@ public class PublicacoesPage extends JFrame{
     private JList list1;
     private int width;
     private int height;
+    private List<Obra> obrasList; // List to store Obra instances
 
 
     private DefaultListModel<String> listModel;//apagar
+
 
 
     public PublicacoesPage() {
@@ -47,6 +55,8 @@ public class PublicacoesPage extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        obrasList = new ArrayList<>();
 
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
@@ -93,6 +103,19 @@ public class PublicacoesPage extends JFrame{
                         Prateleiras.PRATELEIRA_1,
                         Salas.SALA_101
                 );
+                Obra obra2 = new Obra(
+                        "Fortnite",
+                        autores,
+                        Genero.ROMANCE,
+                        Subgenero.ARTE_MODERNA,
+                        "Editora Exemplo",
+                        2344531,
+                        2022,
+                        "123-4567890123",
+                        Estantes.ESTANTE_1A,
+                        Prateleiras.PRATELEIRA_1,
+                        Salas.SALA_101
+                );
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String dataFormatada = dateFormat.format(new Date());
@@ -101,18 +124,40 @@ public class PublicacoesPage extends JFrame{
                 String detalhesObra = obra.getNumeroEdicao() +
                         " | " + obra.getTitulo() +
                         " | " + dataFormatada;
-                String detalhesObra2 = obra.getNumeroEdicao() +
-                        " | " + obra.getTitulo() +
+                String detalhesObra2 = obra2.getNumeroEdicao() +
+                        " | " + obra2.getTitulo() +
                         " | " + dataFormatada;
 
                 listModel = new DefaultListModel<>();
                 list1.setModel(listModel);
-                listModel.addElement(detalhesObra);
+
+
+                String msg;
+                switch (AppData.getInstance().adicionarObra(obra)) {
+                    case 0:
+                        msg = "Obra adicionada com sucesso.";
+                        obrasList.add(obra);
+                        listModel.addElement(detalhesObra);
+                        break;
+                    case -1:
+                        msg = "Erro: Obra está vazia.";
+                        break;
+                    case -2:
+                        msg = "Erro: Número de edição já existe.";
+                        break;
+                    default:
+                        msg = "Erro desconhecido.";
+                }
+                JOptionPane.showMessageDialog(PublicacoesPage.this, msg );
+
+                AppData.getInstance().adicionarObra(obra2);
+
+
+                obrasList.add(obra2);
                 listModel.addElement(detalhesObra2);
 
 
-                JOptionPane.showMessageDialog(PublicacoesPage.this,
-                        "Obras criadas com sucesso!\n");
+
             }
         });
 

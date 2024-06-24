@@ -28,7 +28,7 @@
           <iconTextGap value="6"/>
           <inheritsPopupMenu value="false"/>
           <selected value="false"/>
-          <text value="Requisições/Reservas"/>
+          <text value="Empréstimos/Reservas"/>
         </properties>
       </component>
       <component id="e92dc" class="javax.swing.JButton" binding="definicoesButton">

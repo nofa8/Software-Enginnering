@@ -1,5 +1,5 @@
-import ObjetosProblema.Obra;
-import ObjetosProblema.Socio;
+import Modelos.Obra;
+import Modelos.Socio;
 
 import java.io.*;
 import java.util.HashMap;
@@ -14,8 +14,8 @@ public class AppData implements Serializable{
     private int limiteEmprestimosSim;
     private float multaDiaria;
     private float anualidade;
-    private LinkedList<Obra> obras;
-    private HashMap<Integer, Socio> socios;
+    private LinkedList<Obra> obras; //???
+    private HashMap<Integer, Socio> socios; //???
 
 
     private AppData() {
@@ -106,5 +106,19 @@ public class AppData implements Serializable{
 
     public LinkedList<Obra> getObras() {
         return new LinkedList<>(obras);
+    }
+
+    public void pagarAnuidade(Socio socio) {
+        if (socio == null) {
+            return;
+        }
+        socio.pagarAnuidade();
+    }
+
+    public void pagarMulta(Socio socio) {
+        if (socio == null) {
+            return;
+        }
+        socio.pagarDivida(socio.getValorEmDivida());
     }
 }

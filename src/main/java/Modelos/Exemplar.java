@@ -1,6 +1,9 @@
-package ObjetosProblema;
+package Modelos;
 
-public class Exemplar {
+import java.io.Serializable;
+
+public class Exemplar implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String codigo;
     private Obra obra;
     private boolean disponivel;

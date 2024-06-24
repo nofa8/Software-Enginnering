@@ -1,4 +1,4 @@
-package ObjetosProblema;
+package Modelos;
 
 public enum Subgenero{
     DISTOPIA,

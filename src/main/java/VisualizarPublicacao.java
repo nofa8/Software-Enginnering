@@ -42,7 +42,7 @@ public class VisualizarPublicacao extends JFrame{
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RequisicoesPage.showReqPage();
+                EmprestimosPage.showReqPage();
 
             }
         });

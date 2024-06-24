@@ -3,17 +3,28 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RequisicoesPage extends JFrame{
-    private static RequisicoesPage mainFrame;
+public class EmprestimosPage extends JFrame{
+    private static EmprestimosPage mainFrame;
     private JPanel mainPanel;
     private JButton requisicoesButton;
     private JButton sociosButton;
     private JButton publicacoesButton;
     private JButton definicoesButton;
     private JButton paginaPrincipalButton;
+    private JTable table1;
+    private JRadioButton nºSócioRadioButton;
+    private JTextField numSocio;
+    private JRadioButton codExemplarRadioButton;
+    private JTextField codExemplar;
+    private JRadioButton valorEmAtrasoRadioButton;
+    private JButton pesquisarButton;
+    private JButton reservasButton;
+    private JButton devolverButton;
+    private JButton criarButton;
+    private JButton visualizarButton;
     private int width;
     private int height;
-    public RequisicoesPage() {
+    public EmprestimosPage() {
         super("Bought Page");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,7 +64,7 @@ public class RequisicoesPage extends JFrame{
     }
     public static void showReqPage() {
         if (mainFrame == null) {
-            mainFrame = new RequisicoesPage();
+            mainFrame = new EmprestimosPage();
         }
         if (!mainFrame.isVisible()) {
             mainFrame.setVisible(true);

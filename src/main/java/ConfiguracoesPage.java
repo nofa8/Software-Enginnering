@@ -43,7 +43,7 @@ public class ConfiguracoesPage extends JFrame{
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RequisicoesPage.showReqPage();
+                EmprestimosPage.showReqPage();
 
             }
         });
@@ -123,7 +123,7 @@ public class ConfiguracoesPage extends JFrame{
         multaDiariaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String multaDiariaText = emprestimosSim.getText();
+                String multaDiariaText = multaDiaria.getText();
                 try {
                     float multaDiaria = Integer.parseInt(multaDiariaText);
                     if (multaDiaria <= 0) {

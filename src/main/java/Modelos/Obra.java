@@ -1,9 +1,11 @@
-package ObjetosProblema;
+package Modelos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Obra {
+public class Obra implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String titulo;
     private List<String> autores;
     private Genero genero;

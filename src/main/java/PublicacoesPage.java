@@ -39,7 +39,7 @@ public class PublicacoesPage extends JFrame{
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RequisicoesPage.showReqPage();
+                EmprestimosPage.showReqPage();
             }
         });
         sociosButton.addActionListener(new ActionListener() {

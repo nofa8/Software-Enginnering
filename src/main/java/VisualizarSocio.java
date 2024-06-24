@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 public class VisualizarSocio extends JFrame{
     private JPanel mainPanel;
     private JButton requisicoesButton;
-    private JButton sociosButton;
     private JButton publicacoesButton;
     private JButton definicoesButton;
     private JButton paginaPrincipalButton;
@@ -44,7 +43,7 @@ public class VisualizarSocio extends JFrame{
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RequisicoesPage.showReqPage();
+                EmprestimosPage.showReqPage();
 
             }
         });

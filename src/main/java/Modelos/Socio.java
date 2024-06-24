@@ -1,11 +1,11 @@
-package ObjetosProblema;
+package Modelos;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
-public class Socio  {
-
+public class Socio implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nome;
     private String nifOuCC; // NIF or CC (Citizen Card) number
     private String morada;

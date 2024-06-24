@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ReservasPage extends JFrame{
+    private static ReservasPage mainFrame;
     private JPanel mainPanel;
     private JButton requisicoesButton;
     private JButton sociosButton;
@@ -62,6 +63,16 @@ public class ReservasPage extends JFrame{
                 ConfiguracoesPage.showConfPage();
             }
         });
+    }
+    public static void showReqPage() {
+        if (mainFrame == null) {
+            mainFrame = new ReservasPage();
+        }
+        if (!mainFrame.isVisible()) {
+            mainFrame.setVisible(true);
+        } else {
+            mainFrame.toFront();
+        }
     }
 
 }

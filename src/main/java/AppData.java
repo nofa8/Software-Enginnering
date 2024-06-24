@@ -1,7 +1,7 @@
-import Modelos.Obra;
-import Modelos.Socio;
+import Modelos.*;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -16,6 +16,8 @@ public class AppData implements Serializable{
     private float anualidade;
     private LinkedList<Obra> obras; //???
     private HashMap<Integer, Socio> socios; //???
+
+    private LinkedList<Emprestimo> emprestimos;
 
 
     private AppData() {
@@ -70,7 +72,12 @@ public class AppData implements Serializable{
     }
 
 
-
+    public LinkedList<Emprestimo> getEmprestimos() {
+        if(this.emprestimos == null){
+            this.emprestimos = new LinkedList<Emprestimo>();
+        }
+        return emprestimos;
+    }
 
     public int getDuracaoEmprestimo() {
         return duracaoEmprestimo;
@@ -121,4 +128,5 @@ public class AppData implements Serializable{
         }
         socio.pagarDivida(socio.getValorEmDivida());
     }
+
 }

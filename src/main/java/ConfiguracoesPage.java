@@ -125,8 +125,8 @@ public class ConfiguracoesPage extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String multaDiariaText = multaDiaria.getText();
                 try {
-                    float multaDiaria = Integer.parseInt(multaDiariaText);
-                    if (multaDiaria <= 0) {
+                    float multaDiaria = Float.parseFloat(multaDiariaText);
+                    if (multaDiaria <= 0.0) {
                         JOptionPane.showMessageDialog(null, "O Valor da Multa Diária tem que ser um número superior a 0.", "Input Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }

@@ -14,10 +14,10 @@ public class SociosPage extends JFrame{
     private JButton visualizarButton;
     private JButton alertarDevedoresButton;
     private JButton criarButton;
-    private JTable table1;
     private JRadioButton valorEmAtrasoRadioButton;
     private JTextField numeroSocio;
     private JTextField nome;
+    private JList list1;
     private int width;
     private int height;
     public SociosPage() {

@@ -63,17 +63,11 @@ public class AppData implements Serializable{
         }
     }
 
-    public int adicionarObra(Obra obra) {
+    public void adicionarObra(Obra obra) {
         if (obra == null) {
-            return -1;
-        }
-        for (Obra obraExistente : obras) {
-            if (obraExistente.getISBN() == obra.getISBN()) {
-                return -2;
-            }
+            return;
         }
         obras.add(obra);
-        return 0;
     }
 
     private void initializeDefaultValues() {
@@ -143,10 +137,4 @@ public class AppData implements Serializable{
         socio.pagarDivida(socio.getValorEmDivida());
     }
 
-    public void adicionarObra(Obra obra) {
-        if (obra == null) {
-            return;
-        }
-        obras.add(obra);
-    }
 }

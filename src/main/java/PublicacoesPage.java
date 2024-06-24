@@ -192,25 +192,29 @@ public class PublicacoesPage extends JFrame{
             return;
         }
         for(Obra obra : obras){
-            // Adicionando os detalhes da obra à JList
-            String detalhesObra = "";
-            int value = Math.min(40,Integer.toString(obra.getNumeroEdicao()).length());
-            for (int i = 0; i < 30- value; i++){
-                detalhesObra += " ";
-            }
-            detalhesObra += obra.getNumeroEdicao() + " | ";
-            value = Math.min(60,obra.getTitulo().length());
-            for (int i = 0; i < 60- value; i++){
-                detalhesObra += " ";
-            }
-            detalhesObra += obra.getTitulo()+" | ";
-            value = Math.min(60,Integer.toString(obra.getAno()).length());
-            for (int i = 0; i < 60- value; i++){
-                detalhesObra += " ";
-            }
-            listModel.addElement(detalhesObra);
+            listModel.addElement(formatar(obra));
         }
 
+    }
+
+    private String formatar(Obra obra){
+        String detalhesObra = "";
+        int value = Math.min(34,Integer.toString(obra.getNumeroEdicao()).length());
+        for (int i = 0; i < 35- value; i++){
+            detalhesObra += " ";
+        }
+        detalhesObra += obra.getNumeroEdicao() + "   ";
+        value = Math.min(64,obra.getTitulo().length());
+        for (int i = 0; i < 65- value; i++){
+            detalhesObra += " ";
+        }
+        detalhesObra += obra.getTitulo()+"   ";
+        value = Math.min(64,Integer.toString(obra.getAno()).length());
+        for (int i = 0; i < 65- value; i++){
+            detalhesObra += " ";
+        }
+        detalhesObra += obra.getAno();
+        return detalhesObra;
     }
 
     public static void showPubPage() {

@@ -3,24 +3,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Casa extends JFrame{
-    private static Casa mainFrame;
+public class VisualizarPublicacao extends JFrame{
     private JPanel mainPanel;
     private JButton requisicoesButton;
     private JButton sociosButton;
     private JButton publicacoesButton;
     private JButton definicoesButton;
     private JButton paginaPrincipalButton;
-    private JLabel time;
-    private JLabel date;
-    private JLabel month;
-    private JLabel week;
-    private JLabel today;
-    private JButton sairButton;
+    private JButton voltarButton;
+    private JButton editarButton;
+    private JLabel edicao;
+    private JLabel isbn;
+    private JLabel editora;
+    private JLabel fornecedor;
+    private JLabel autor;
+    private JLabel genero;
+    private JLabel subgenero;
+    private JLabel criacao;
+    private JLabel sala;
+    private JLabel estante;
+    private JLabel prateleira;
+    private JLabel quantidade;
     private int width;
     private int height;
-    public Casa() {
-        super("Casa");
+    public VisualizarPublicacao() {
+        super("Visualizar Publicacao");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -51,28 +58,18 @@ public class Casa extends JFrame{
                 SociosPage.showSocPage();
             }
         });
+        paginaPrincipalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Casa.showCasaPage();
+            }
+        });
         definicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ConfiguracoesPage.showConfPage();
             }
         });
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            AppData.getInstance().saveToFile();
-        }));
     }
 
-    public static void showCasaPage() {
-        if (mainFrame == null) {
-            mainFrame = new Casa();
-        }
-        if (!mainFrame.isVisible()) {
-            mainFrame.setVisible(true);
-        } else {
-            mainFrame.toFront();
-        }
-    }
-    public static void main(String[] args) {
-        showCasaPage();
-    }
 }

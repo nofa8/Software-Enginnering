@@ -14,6 +14,7 @@ public class Obra {
     private String ISBN;
     private String estante;
     private String prateleira;
+    private String sala;
     private List<Exemplar> exemplares;
 
     public Obra(String titulo, List<String> autores, Genero genero, Subgenero subgenero,

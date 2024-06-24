@@ -3,24 +3,33 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Casa extends JFrame{
-    private static Casa mainFrame;
+public class VisualizarSocio extends JFrame{
     private JPanel mainPanel;
     private JButton requisicoesButton;
     private JButton sociosButton;
     private JButton publicacoesButton;
     private JButton definicoesButton;
     private JButton paginaPrincipalButton;
-    private JLabel time;
-    private JLabel date;
-    private JLabel month;
-    private JLabel week;
-    private JLabel today;
-    private JButton sairButton;
+    private JButton voltarButton;
+    private JButton editarButton;
+    private JLabel nsocio;
+    private JLabel nifCC;
+    private JLabel telefone;
+    private JLabel email;
+    private JLabel distrito;
+    private JLabel cidade;
+    private JLabel anualidade;
+    private JLabel incricao;
+    private JLabel codigoPostal;
+    private JLabel morada;
+    private JLabel estado;
+    private JLabel nrequisicoes;
+    private JButton eliminarButton;
+    private JButton pagamentosButton;
     private int width;
     private int height;
-    public Casa() {
-        super("Casa");
+    public VisualizarSocio() {
+        super("Visualizar Sócio");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -45,10 +54,10 @@ public class Casa extends JFrame{
                 PublicacoesPage.showPubPage();
             }
         });
-        sociosButton.addActionListener(new ActionListener() {
+        paginaPrincipalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SociosPage.showSocPage();
+                Casa.showCasaPage();
             }
         });
         definicoesButton.addActionListener(new ActionListener() {
@@ -57,22 +66,6 @@ public class Casa extends JFrame{
                 ConfiguracoesPage.showConfPage();
             }
         });
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            AppData.getInstance().saveToFile();
-        }));
     }
 
-    public static void showCasaPage() {
-        if (mainFrame == null) {
-            mainFrame = new Casa();
-        }
-        if (!mainFrame.isVisible()) {
-            mainFrame.setVisible(true);
-        } else {
-            mainFrame.toFront();
-        }
-    }
-    public static void main(String[] args) {
-        showCasaPage();
-    }
 }

@@ -1,6 +1,4 @@
-import Modelos.Obra;
-import Modelos.Genero;
-import Modelos.Subgenero;
+import Modelos.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -91,8 +89,9 @@ public class PublicacoesPage extends JFrame{
                         45641,
                         2023,
                         "123-4567890123",
-                        "Estante A",
-                        "Prateleira 1"
+                        Estantes.ESTANTE_1A,
+                        Prateleiras.PRATELEIRA_1,
+                        Salas.SALA_101
                 );
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

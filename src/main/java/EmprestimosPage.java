@@ -1,7 +1,13 @@
+import Modelos.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class EmprestimosPage extends JFrame{
     private static EmprestimosPage mainFrame;
@@ -11,7 +17,6 @@ public class EmprestimosPage extends JFrame{
     private JButton publicacoesButton;
     private JButton definicoesButton;
     private JButton paginaPrincipalButton;
-    private JTable table1;
     private JRadioButton nºSócioRadioButton;
     private JTextField numSocio;
     private JRadioButton codExemplarRadioButton;
@@ -22,6 +27,8 @@ public class EmprestimosPage extends JFrame{
     private JButton devolverButton;
     private JButton criarButton;
     private JButton visualizarButton;
+    private JList listEmprestimos;
+    private DefaultListModel<String> listModel;
     private int width;
     private int height;
     public EmprestimosPage() {
@@ -36,6 +43,11 @@ public class EmprestimosPage extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        listModel = new DefaultListModel<>();
+        listEmprestimos.setModel(listModel);
+
+
 
         publicacoesButton.addActionListener(new ActionListener() {
             @Override
@@ -59,6 +71,35 @@ public class EmprestimosPage extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 ConfiguracoesPage.showConfPage();
+            }
+        });
+        criarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Emprestimo emprestimo = new Emprestimo(new Exemplar("123456", new Obra("Queixo no Soco", List.of("ola"),Genero.AVENTURA, Subgenero.DISTOPIA,
+                        "Editora", 1234,2015,"dfegr", Estantes.ESTANTE_1A,Prateleiras.PRATELEIRA_1,Salas.SALA_101)),
+                        new Socio("Rei","123456778","dfeghrtj", "91972345", "arroz@mail.com",12),12);
+                String detalhesEmprestimo = emprestimo.getSocio().getNumero() +
+                        " | " + emprestimo.getExemplar().getObra().getTitulo() + " - " + emprestimo.getExemplar().getCodigo() +
+                        " | " + emprestimo.getDataEmprestimo();
+
+
+                listModel.addElement(detalhesEmprestimo);
+
+                JOptionPane.showMessageDialog(EmprestimosPage.this,
+                        "Emprestimos criados com sucesso!\n");
+            }
+        });
+        devolverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(listEmprestimos.getSelectedValue());
+            }
+        });
+        reservasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ReservasPage.showReqPage();
             }
         });
     }

@@ -249,9 +249,9 @@
                   <text value="Cod. Exemplar"/>
                 </properties>
               </component>
-              <component id="d7f40" class="javax.swing.JTable" binding="table1" default-binding="true">
+              <component id="695d4" class="javax.swing.JList" binding="listEmprestimos">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                  <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
                   </grid>
                 </constraints>

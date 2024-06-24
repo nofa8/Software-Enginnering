@@ -30,9 +30,9 @@ public class Obra implements Serializable {
         this.numeroEdicao = numeroEdicao;
         this.ano = ano;
         this.ISBN = ISBN;
-        this.sala = sala;
         this.estante = estante;
         this.prateleira = prateleira;
+        this.sala = sala;
         this.exemplares = new ArrayList<>();
     }
 
@@ -105,27 +105,27 @@ public class Obra implements Serializable {
         this.ISBN = ISBN;
     }
 
-    public String getEstante() {
+    public Estantes getEstante() {
         return estante;
     }
 
-    public void setEstante(String estante) {
-        this.estante = estante;
-    }
-
-    public String getPrateleira() {
+    public Prateleiras getPrateleira() {
         return prateleira;
     }
 
-    public void setPrateleira(String prateleira) {
-        this.prateleira = prateleira;
-    }
-
-    public String getSala() {
+    public Salas getSala() {
         return sala;
     }
 
-    public void setSala(String sala) {
+    public void setEstante(Estantes estante) {
+        this.estante = estante;
+    }
+
+    public void setPrateleira(Prateleiras prateleira) {
+        this.prateleira = prateleira;
+    }
+
+    public void setSala(Salas sala) {
         this.sala = sala;
     }
 

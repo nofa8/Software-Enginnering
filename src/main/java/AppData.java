@@ -78,7 +78,7 @@ public class AppData implements Serializable{
         if(this.emprestimos == null){
             this.emprestimos = new LinkedList<>();
         }
-        return emprestimos;
+        return new LinkedList<>(emprestimos);
     }
 
     public int getDuracaoEmprestimo() {

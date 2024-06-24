@@ -15,6 +15,7 @@ public class Socio implements Serializable {
     private boolean anuidadeEmDia;
     private ArrayList<Emprestimo> emprestimosAtuais;
     private float valorEmDivida;
+    private int numero;
 
     private PreferenciaComunicacao preferenciaComunicacao;
 
@@ -22,7 +23,7 @@ public class Socio implements Serializable {
         SMS, EMAIL
     }
 
-    public Socio(String nome, String nifOuCC, String morada, String telefone, String email) {
+    public Socio(String nome, String nifOuCC, String morada, String telefone, String email, int numero) {
         this.nome = nome;
         this.nifOuCC = nifOuCC;
         this.morada = morada;
@@ -33,6 +34,7 @@ public class Socio implements Serializable {
         this.emprestimosAtuais = new ArrayList<>();
         this.valorEmDivida = 0.0f;
         this.preferenciaComunicacao = PreferenciaComunicacao.EMAIL; // Default to email
+        this.numero = numero;
     }
 
     public boolean podeRequisitarLivros(int limiteMaximo) {
@@ -130,6 +132,10 @@ public class Socio implements Serializable {
         this.preferenciaComunicacao = preferenciaComunicacao;
     }
 
+    public int getNumero() {
+        return numero;
+    }
+
     @Override
     public String toString() {
         return "Socio{" +
@@ -138,10 +144,12 @@ public class Socio implements Serializable {
                 ", morada='" + morada + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
+                ", número de sócio= '" + numero + '\''+
                 ", anuidadeEmDia=" + anuidadeEmDia +
                 ", emprestimosAtuais=" + emprestimosAtuais.size() +
                 ", valorEmDivida=" + valorEmDivida +
                 ", preferenciaComunicacao=" + preferenciaComunicacao +
                 '}';
     }
+
 }

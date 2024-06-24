@@ -93,7 +93,24 @@ public class EmprestimosPage extends JFrame{
         devolverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(listEmprestimos.getSelectedValue());
+                if(listEmprestimos.getSelectedIndex() == -1){
+                    JOptionPane.showMessageDialog(EmprestimosPage.this,
+                            "Selecione um empréstimo!\n");
+                    return;
+                }
+                int indice = listEmprestimos.getSelectedIndex();
+                LinkedList<Emprestimo> emprestimos = AppData.getInstance().getEmprestimos();
+
+                Emprestimo emprestimo = emprestimos.get(indice);
+                if (emprestimo.getDataDevolucaoEfetiva() != null){
+                    JOptionPane.showMessageDialog(EmprestimosPage.this,
+                            "Empréstimo já terminado\n");
+                    return;
+                }
+
+                emprestimo.realizarDevolucao(AppData.getInstance().getMultaDiaria());
+                JOptionPane.showMessageDialog(EmprestimosPage.this,
+                        "Devolução realizada com sucesso!\n");
             }
         });
         reservasButton.addActionListener(new ActionListener() {

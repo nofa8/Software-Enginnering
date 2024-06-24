@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class AppData implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -76,6 +77,10 @@ public class AppData implements Serializable{
         if(this.emprestimos == null){
             this.emprestimos = new LinkedList<Emprestimo>();
         }
+        Emprestimo emprestimo = new Emprestimo(new Exemplar("123456", new Obra("Queixo no Soco", List.of("ola"),Genero.AVENTURA, Subgenero.DISTOPIA,
+                "Editora", 1234,2015,"dfegr", Estantes.ESTANTE_1A,Prateleiras.PRATELEIRA_1,Salas.SALA_101)),
+                new Socio("Rei","123456778","dfeghrtj", "91972345", "arroz@mail.com",12),12);
+        emprestimos.add(emprestimo);
         return emprestimos;
     }
 

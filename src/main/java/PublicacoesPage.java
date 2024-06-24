@@ -149,7 +149,6 @@ public class PublicacoesPage extends JFrame{
     private void atualizar(){
         listModel = new DefaultListModel<>();
         list1.setModel(listModel);
-//        listModel.addElement("\tNºEdição\t\tObra\t\tAno");
         if (obras == null){
             return;
         }

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Objects;
 
 public class CriarPublicacao extends JFrame{
@@ -42,13 +43,26 @@ public class CriarPublicacao extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         me = this;
-        genero = new JComboBox(Genero.values());
-        subgenero = new JComboBox(Subgenero.values());
-        editora = new JComboBox(Editora.values());
-        distribuidor = new JComboBox(Distribuidor.values());
-        sala = new JComboBox(Salas.values());
-        estante = new JComboBox(Estantes.values());
-        prateleira = new JComboBox(Prateleiras.values());
+
+        EnumSet.allOf(Genero.class)
+                .forEach(gene -> genero.addItem(gene));
+
+        EnumSet.allOf(Subgenero.class)
+                .forEach(gene -> subgenero.addItem(gene));
+        EnumSet.allOf(Editora.class)
+                .forEach(gene -> editora.addItem(gene));
+        EnumSet.allOf(Distribuidor.class)
+                .forEach(gene -> distribuidor.addItem(gene));
+        EnumSet.allOf(Salas.class)
+                .forEach(gene -> sala.addItem(gene));
+        EnumSet.allOf(Estantes.class)
+                .forEach(gene -> estante.addItem(gene));
+        EnumSet.allOf(Prateleiras.class)
+                .forEach(gene -> prateleira.addItem(gene));
+//        distribuidor = new JComboBox(Distribuidor.values());
+//        sala = new JComboBox(Salas.values());
+//        estante = new JComboBox(Estantes.values());
+//        prateleira = new JComboBox(Prateleiras.values());
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -163,7 +177,7 @@ public class CriarPublicacao extends JFrame{
                 AppData.getInstance().adicionarObra(obra);
                 JOptionPane.showMessageDialog(null,
                         "Obra criada com sucesso!\n");
-
+                PublicacoesPage.showPubPage();
                 me.dispose();
             }
         });

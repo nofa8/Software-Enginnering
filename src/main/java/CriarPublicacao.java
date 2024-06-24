@@ -5,10 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.Objects;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class CriarPublicacao extends JFrame{
     private static CriarPublicacao me;
@@ -139,7 +138,7 @@ public class CriarPublicacao extends JFrame{
                     numEdicao = Integer.parseInt(ned);
                 }catch (NumberFormatException exception){
                     JOptionPane.showMessageDialog(me,
-                            "O numero de edição tem que ser um número inteiro positivo!\n");
+                            "O numero de edição tem que ser um número inteiro positivo e não superior a 2147483647!\n");
                     return;
                 }
 
@@ -148,7 +147,15 @@ public class CriarPublicacao extends JFrame{
                     anoo = Integer.parseInt(an);
                 }catch (NumberFormatException exception){
                     JOptionPane.showMessageDialog(me,
-                            "O numero de edição tem que ser um número inteiro positivo!\n");
+                            "O ano tem que ser um número inteiro positivo!\n");
+                    return;
+                }
+
+                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+                int hoje = Integer.parseInt(yearFormat.format(new Date()));
+                if (anoo < 1960 || anoo > hoje){
+                    JOptionPane.showMessageDialog(me,
+                            "Ano inválido "+1960+"-"+hoje+"!\n");
                     return;
                 }
 

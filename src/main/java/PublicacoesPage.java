@@ -61,6 +61,7 @@ public class PublicacoesPage extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 EmprestimosPage.showReqPage();
+
             }
         });
         sociosButton.addActionListener(new ActionListener() {

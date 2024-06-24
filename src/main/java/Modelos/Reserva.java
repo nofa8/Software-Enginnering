@@ -6,6 +6,8 @@ public class Reserva {
     private Obra obra;
     private Socio socio;
 
+    private LocalDate dataInicio;
+
     public Reserva(Obra obra, Socio socio) {
         this.obra = obra;
         this.socio = socio;
@@ -19,5 +21,11 @@ public class Reserva {
         return socio;
     }
 
-
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "obra=" + obra.getTitulo() +
+                ", socio=" + socio.getNumero() +
+                '}';
+    }
 }

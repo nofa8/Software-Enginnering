@@ -14,14 +14,14 @@ public class Obra implements Serializable {
     private int numeroEdicao;
     private int ano;
     private String ISBN;
-    private String estante;
-    private String prateleira;
-    private String sala;
+    private Estantes estante;
+    private Prateleiras prateleira;
+    private Salas sala;
     private List<Exemplar> exemplares;
 
     public Obra(String titulo, List<String> autores, Genero genero, Subgenero subgenero,
                 String editora, int numeroEdicao, int ano, String ISBN,
-                String estante, String prateleira) {
+                Estantes estante, Prateleiras prateleira, Salas sala) {
         this.titulo = titulo;
         this.autores = autores;
         this.genero = genero;
@@ -30,6 +30,7 @@ public class Obra implements Serializable {
         this.numeroEdicao = numeroEdicao;
         this.ano = ano;
         this.ISBN = ISBN;
+        this.sala = sala;
         this.estante = estante;
         this.prateleira = prateleira;
         this.exemplares = new ArrayList<>();

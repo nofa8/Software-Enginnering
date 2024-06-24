@@ -28,37 +28,34 @@ public class BoughtPage extends JFrame{
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new RequisicoesPage();
+                RequisicoesPage.showReqPage();
 
             }
         });
         publicacoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PublicacoesPage();
+                 PublicacoesPage.showPubPage();
             }
         });
         sociosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SociosPage();
+                SociosPage.showSocPage();
             }
         });
         paginaPrincipalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Casa();
+                Casa.showCasaPage();
             }
         });
         definicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ConfiguracoesPage();
+                ConfiguracoesPage.showConfPage();
             }
         });
     }
 
-    public static void main(String[] args) {
-        Casa firstPage1 = new Casa();
-    }
 }

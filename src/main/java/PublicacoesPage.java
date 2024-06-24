@@ -4,12 +4,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PublicacoesPage extends JFrame{
+    private static PublicacoesPage mainFrame;
     private JPanel mainPanel;
     private JButton requisicoesButton;
     private JButton sociosButton;
     private JButton publicacoesButton;
     private JButton definicoesButton;
     private JButton paginaPrincipalButton;
+    private JButton adicionarExButton;
+    private JButton eliminarButton;
+    private JButton visualizarButton;
+    private JButton criarButton;
+    private JRadioButton topRequisitadosRadioButton;
+    private JComboBox generoDrop;
+    private JComboBox subgeneroDrop;
+    private JTable table1;
+    private JTextField autorTxt;
+    private JButton pesquisarButton;
     private int width;
     private int height;
     public PublicacoesPage() {
@@ -28,31 +39,53 @@ public class PublicacoesPage extends JFrame{
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new RequisicoesPage();
-
+                RequisicoesPage.showReqPage();
             }
         });
         sociosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SociosPage();
+                SociosPage.showSocPage();
             }
         });
         paginaPrincipalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Casa();
+                Casa.showCasaPage();
             }
         });
         definicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ConfiguracoesPage();
+                ConfiguracoesPage.showConfPage();
+            }
+        });
+        pesquisarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (topRequisitadosRadioButton.isSelected()){
+
+                }
+                if (generoDrop.getSelectedItem() != null){
+
+                }
+                if (subgeneroDrop.getSelectedItem() != null){
+
+                }
+                if (autorTxt.getText() != null){
+
+                }
             }
         });
     }
-
-    public static void main(String[] args) {
-        Casa firstPage1 = new Casa();
+    public static void showPubPage() {
+        if (mainFrame == null) {
+            mainFrame = new PublicacoesPage();
+        }
+        if (!mainFrame.isVisible()) {
+            mainFrame.setVisible(true);
+        } else {
+            mainFrame.toFront();
+        }
     }
 }

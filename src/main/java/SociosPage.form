@@ -55,7 +55,7 @@
         <properties>
           <enabled value="true"/>
           <hideActionText value="false"/>
-          <text value="Página Principal"/>
+          <text value="Casa"/>
         </properties>
       </component>
       <component id="e6e04" class="javax.swing.JButton" binding="sociosButton">

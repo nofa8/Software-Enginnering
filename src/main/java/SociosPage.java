@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SociosPage extends JFrame{
+    private static SociosPage mainFrame;
     private JPanel mainPanel;
     private JButton requisicoesButton;
     private JButton sociosButton;
@@ -28,31 +29,37 @@ public class SociosPage extends JFrame{
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new RequisicoesPage();
+                RequisicoesPage.showReqPage();
 
             }
         });
         publicacoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PublicacoesPage();
+                PublicacoesPage.showPubPage();
             }
         });
         paginaPrincipalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Casa();
+                Casa.showCasaPage();
             }
         });
         definicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ConfiguracoesPage();
+                ConfiguracoesPage.showConfPage();
             }
         });
     }
-
-    public static void main(String[] args) {
-        Casa firstPage1 = new Casa();
+    public static void showSocPage() {
+        if (mainFrame == null) {
+            mainFrame = new SociosPage();
+        }
+        if (!mainFrame.isVisible()) {
+            mainFrame.setVisible(true);
+        } else {
+            mainFrame.toFront();
+        }
     }
 }

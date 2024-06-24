@@ -1,0 +1,31 @@
+package ObjetosProblema;
+
+public enum Genero {
+    FICCAO_CIENTIFICA,
+    FANTASIA,
+    TERROR,
+    ROMANCE,
+    AVENTURA,
+    DRAMA,
+    MISTERIO,
+    BIOGRAFIA,
+    AUTOAJUDA,
+    HISTORIA,
+    POESIA,
+    RELIGIAO,
+    HUMOR,
+    SUSPENSE,
+    INFANTOJUVENIL,
+    EDUCACAO,
+    FILOSOFIA,
+    PSICOLOGIA,
+    NEGOCIOS,
+    SAUDE,
+    GUIAS,
+    TECNOLOGIA,
+    ARTE,
+    CULINARIA,
+    VIAGEM;
+}
+
+

@@ -1,5 +1,6 @@
 import Modelos.*;
 
+import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -295,5 +296,29 @@ public class AppData implements Serializable{
         }
         obras.remove(obra);
         return 0;
+    }
+
+    public HashMap<Integer, Socio> getSocios() {
+        return new HashMap<>(socios);
+    }
+
+    public void adicionarEmprestimo(Exemplar exemplarRequisitar, String numSocio) {
+
+        int numdiasEmprestimo = this.duracaoEmprestimo;
+
+        Socio socio = socios.get(Integer.parseInt(numSocio));
+
+        Emprestimo emprestimonovo = new Emprestimo(exemplarRequisitar, socio, numdiasEmprestimo);
+        exemplarRequisitar.setDisponivel(false);
+        emprestimos.add(emprestimonovo);
+
+    }
+
+    public void adicionarReserva(Obra obra, String numSocio) {
+        Socio socio = socios.get(Integer.parseInt(numSocio));
+        Reserva reserva = new Reserva(obra, socio);
+        System.out.println(reservas);
+
+        this.reservas.add(reserva);
     }
 }

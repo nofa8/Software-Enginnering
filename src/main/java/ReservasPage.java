@@ -64,6 +64,38 @@ public class ReservasPage extends JFrame{
             }
         });
         atualizar();
+        pesquisarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int soc = 0;
+                String socio = null;
+                if ( nºSócioRadioButton.isSelected() && !numSocio.getText().isEmpty()){
+                    socio = numSocio.getText();
+                    try {
+                        soc = Integer.parseInt(socio);
+                    } catch (NumberFormatException exception) {
+                        JOptionPane.showMessageDialog(mainFrame,
+                                "Sócio tem que ser um número inteiro!\n");
+                        return;
+                    }
+                    if (soc < 0) {
+                        JOptionPane.showMessageDialog(mainFrame,
+                                "Sócio tem que ser um inteiro positivo!\n");
+                        return;
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(mainFrame,
+                            "Filtro não definido!\n");
+                    return;
+                }
+
+                reservas= AppData.getInstance().filtrarReservas(nºSócioRadioButton.isSelected(),soc);
+                atualizar();
+
+
+            }
+        });
     }
     private static void atualizarReservas(){
         reservas = AppData.getInstance().getReservas();

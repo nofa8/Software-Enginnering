@@ -1,7 +1,5 @@
-import Modelos.Emprestimo;
 import Modelos.Exemplar;
 import Modelos.Obra;
-import Modelos.Reserva;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -27,6 +25,7 @@ public class CriarEmprestimo extends JFrame {
     private JTextField textTituloSearch;
     private JLabel labelObraTitulo;
     private JButton voltarButton;
+    private JButton pesquisarTituloButton;
     private int width;
     private int height;
     private static LinkedList<Obra> obras = null;
@@ -138,6 +137,21 @@ public class CriarEmprestimo extends JFrame {
                 JOptionPane.showMessageDialog(CriarEmprestimo.this,
                         "Reserva criada com sucesso","Reserva criado",
                         JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        pesquisarTituloButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String titulo = textTituloSearch.getText();
+                if (titulo.isEmpty()){
+                    JOptionPane.showMessageDialog(CriarEmprestimo.this,
+                            "Título tem que ser preenchido para filtrar!","Falta de Título",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                obras= AppData.getInstance().filtrarObrasEmprestimo(titulo);
+                atualizar();
             }
         });
     }

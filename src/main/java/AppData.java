@@ -307,6 +307,29 @@ public class AppData implements Serializable{
         return new LinkedList<>(filteredStream.toList());
     }
 
+
+    public LinkedList<Reserva> filtrarReservas(boolean selected, int soc) {
+        Stream<Reserva> filteredStream = reservas.stream();
+
+        if (soc != 0) {
+            filteredStream = filteredStream.filter(reserva -> reserva.getSocio().getNumero() == (soc));
+        }
+
+        return new LinkedList<>(filteredStream.toList());
+    }
+
+    public LinkedList<Obra> filtrarObrasEmprestimo(String titulo) {
+        Stream<Obra> filteredStream = obras.stream();
+        if (titulo != null) {
+            filteredStream = filteredStream.filter(obra-> obra.getTitulo().equals(titulo));
+        }
+        return new LinkedList<>(filteredStream.toList());
+    }
+
+
+
+
+
     public int eliminarObra(Obra obra) {
         if (obra == null) {
             return -1;
@@ -381,4 +404,7 @@ public class AppData implements Serializable{
         }
         return i;
     }
+
+
+
 }

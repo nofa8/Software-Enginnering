@@ -9,9 +9,12 @@ public class Socio implements Serializable {
     private String nome;
     private String nifOuCC; // NIF or CC (Citizen Card) number
     private String morada;
+    private String cidade;
     private String telefone;
     private String email;
-    private LocalDate dataUltimaPagamentoAnuidade;
+    private String codigoPostal;
+    private Distrito distrito;
+    private LocalDate dataProximoPagamentoAnuidade;
     private LocalDate dataInscricao;
     private boolean anuidadeEmDia;
     private ArrayList<Emprestimo> emprestimosAtuais;
@@ -24,13 +27,16 @@ public class Socio implements Serializable {
         SMS, EMAIL
     }
 
-    public Socio(String nome, String nifOuCC, String morada, String telefone, String email, int numero) {
+    public Socio(String nome, String nifOuCC, String morada,Distrito distrito, String cidade,String codigoPostal, String telefone, String email, int numero) {
         this.nome = nome;
         this.nifOuCC = nifOuCC;
         this.morada = morada;
+        this.distrito = distrito;
+        this.cidade = cidade;
+        this.codigoPostal = codigoPostal;
         this.telefone = telefone;
         this.email = email;
-        this.dataUltimaPagamentoAnuidade = LocalDate.now().plusYears(1);
+        this.dataProximoPagamentoAnuidade = LocalDate.now().plusYears(1);
         this.dataInscricao = LocalDate.now();
         this.anuidadeEmDia = true;
         this.emprestimosAtuais = new ArrayList<>();
@@ -60,12 +66,12 @@ public class Socio implements Serializable {
     }
 
     public void pagarAnuidade() {
-        dataUltimaPagamentoAnuidade = LocalDate.now();
+        dataProximoPagamentoAnuidade = LocalDate.now();
         anuidadeEmDia = true;
     }
 
     public void verificarAnuidade() {
-        anuidadeEmDia = LocalDate.now().isBefore(dataUltimaPagamentoAnuidade.plusYears(1));
+        anuidadeEmDia = LocalDate.now().isBefore(dataProximoPagamentoAnuidade.plusYears(1));
     }
 
     // Getters and setters
@@ -110,8 +116,8 @@ public class Socio implements Serializable {
         this.email = email;
     }
 
-    public LocalDate getDataUltimaPagamentoAnuidade() {
-        return dataUltimaPagamentoAnuidade;
+    public LocalDate getDataProximoPagamentoAnuidade() {
+        return dataProximoPagamentoAnuidade;
     }
 
     public boolean isAnuidadeEmDia() {
@@ -134,9 +140,45 @@ public class Socio implements Serializable {
         this.preferenciaComunicacao = preferenciaComunicacao;
     }
 
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
     public int getNumero() {
         return numero;
     }
+
+    public Distrito getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(Distrito distrito) {
+        this.distrito = distrito;
+    }
+
+    public LocalDate getDataInscricao() {
+        return dataInscricao;
+    }
+
+    public boolean getAnuidadeEmDia() {
+        return anuidadeEmDia;
+    }
+
+
+
 
     @Override
     public String toString() {

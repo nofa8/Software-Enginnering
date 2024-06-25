@@ -6,11 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
-public class CriarSocio extends JFrame{
-    private static CriarSocio me;
+public class EditarSocio extends JFrame{
+    private static EditarSocio me;
     private JPanel mainPanel;
     private JTextField nomeTextField;
-    private JButton criarButton;
+    private JButton editarButton;
     private JButton voltarButton;
     private JPanel nSocioLabel;
     private JTextField textFieldNsocio;
@@ -21,11 +21,17 @@ public class CriarSocio extends JFrame{
     private JTextField textFieldCodigoPostal;
     private JTextField textFieldMorada;
     private JComboBox comboBoxdistrito;
+    private JLabel nSocio;
+    private JLabel estadoField;
+    private JLabel anualidadeField;
+    private JLabel inscriacaoField;
+    private JLabel nReqField;
     private int width;
     private int height;
+    private Socio antigo;
 
-    public CriarSocio() {
-        super("Criar Sócio");
+    public EditarSocio(Socio socio) {
+        super("Editar Sócio");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -41,6 +47,10 @@ public class CriarSocio extends JFrame{
         EnumSet.allOf(Distrito.class)
                 .forEach(dist -> comboBoxdistrito.addItem(dist));
 
+        antigo = socio;
+
+        atualizarSocio(socio);
+
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,7 +58,7 @@ public class CriarSocio extends JFrame{
                 me.dispose();
             }
         });
-        criarButton.addActionListener(new ActionListener() {
+        editarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -70,7 +80,6 @@ public class CriarSocio extends JFrame{
                 if (textFieldCodigoPostal.getText() == null){
                     JOptionPane.showMessageDialog(me,
                             "Codigo Postal tem que ser um preenchido!\n");
-
                     return;
                 }
                 if (nomeTextField.getText() == null){
@@ -132,10 +141,31 @@ public class CriarSocio extends JFrame{
             }
         });
     }
+    private static void atualizarSocio(Socio socio) {
+        me.textFieldNsocio.setText(Integer.toString(socio.getNumero()));
+        me.textFieldNif.setText(socio.getNifOuCC());
+        me.textFieldTel.setText(socio.getTelefone());
+        me.textFieldEmail.setText(socio.getEmail());
+        me.comboBoxdistrito.setSelectedItem(socio.getDistrito());
+        me.textFieldCidade.setText(socio.getCidade());
+        me.textFieldCodigoPostal.setText(socio.getCodigoPostal());
+        me.textFieldMorada.setText(socio.getMorada());
+        me.estadoField.setText(socio.getDataInscricao().toString());
+        me.anualidadeField.setText(socio.getDataProximoPagamentoAnuidade().toString());
+        socio.verificarAnuidade();
+        if(socio.getAnuidadeEmDia()){
+            me.estadoField.setText("Ativo");
+        }
+        else{
+            me.estadoField.setText("Inativo");
+        }
+        me.nReqField.setText(String.valueOf(socio.getEmprestimosAtuais().size()));
 
-    public static void showCriarSocPage() {
+    }
+
+    public static void showEditarSocPage(Socio socio) {
         if (me == null) {
-            me = new CriarSocio();
+            me = new EditarSocio(socio);
         }
         if (!me.isVisible()) {
             me.setVisible(true);
@@ -144,8 +174,7 @@ public class CriarSocio extends JFrame{
         }
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
+
 }
+
 

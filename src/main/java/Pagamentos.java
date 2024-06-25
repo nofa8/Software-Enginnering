@@ -30,7 +30,7 @@ public class Pagamentos extends JFrame{
 
 
         nomSocio.setText(socio.getNome());
-        proximaAnualidade.setText(String.valueOf(socio.getDataUltimaPagamentoAnuidade().plusYears(1)));
+        proximaAnualidade.setText(String.valueOf(socio.getDataProximoPagamentoAnuidade().plusYears(1)));
         anualidade.setText(String.valueOf(AppData.getInstance().getAnualidade()));
         multaTotal.setText(String.valueOf(socio.getValorEmDivida()));
 

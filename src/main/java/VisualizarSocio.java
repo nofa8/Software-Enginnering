@@ -44,7 +44,7 @@ public class VisualizarSocio extends JFrame{
         this.setVisible(true);
 
         me = this;
-        //atualizarSocio(socio);
+        atualizarSocio(socio);
 
         voltarButton.addActionListener(new ActionListener() {
             @Override
@@ -54,8 +54,41 @@ public class VisualizarSocio extends JFrame{
                 me.dispose();
             }
         });
+    }
 
+    private static void atualizarSocio(Socio socio) {
+        me.nsocio.setText(Integer.toString(socio.getNumero()));
+        me.nifCC.setText(socio.getNifOuCC());
+        me.telefone.setText(socio.getTelefone());
+        me.email.setText(socio.getEmail());
+        me.distrito.setText(socio.getDistrito().toString());
+        me.cidade.setText(socio.getCidade());
+        me.codigoPostal.setText(socio.getCodigoPostal());
+        me.morada.setText(socio.getMorada());
+        me.incricao.setText(socio.getDataInscricao().toString());
+        me.anualidade.setText(socio.getDataProximoPagamentoAnuidade().toString());
+        socio.verificarAnuidade();
+        if(socio.getAnuidadeEmDia()){
+            me.estado.setText("Ativo");
+        }
+        else{
+            me.estado.setText("Inativo");
+        }
+        me.nrequisicoes.setText(String.valueOf(socio.getEmprestimosAtuais().size()));
 
+    }
+
+    public static void showVisSocPage(Socio socio) {
+        if (me == null) {
+            me = new VisualizarSocio(socio);
+        }
+        if (!me.isVisible()) {
+            atualizarSocio(socio);
+            me.setVisible(true);
+        } else {
+            atualizarSocio(socio);
+            me.toFront();
+        }
     }
 
 }

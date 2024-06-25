@@ -133,13 +133,37 @@ public class CriarSocio extends JFrame{
         });
     }
 
+    private static void cleanPlaces() {
+        SwingUtilities.invokeLater(() -> {
+            if (me != null) {
+                me.clean();
+            }
+        });
+    }
+
+    private void clean() {
+        // Atualizar os campos do formulário com os dados da obra
+        textFieldNsocio.setText("");
+        textFieldNif.setText("");
+        textFieldCidade.setText("");
+        textFieldCodigoPostal.setText("");
+        textFieldMorada.setText("");
+        textFieldEmail.setText("");
+        textFieldTel.setText("");
+        // Set initial values for combo boxes
+        comboBoxdistrito.setSelectedItem(comboBoxdistrito.getItemAt(0));
+        nomeTextField.setText("Nome");
+    }
+
     public static void showCriarSocPage() {
         if (me == null) {
             me = new CriarSocio();
         }
         if (!me.isVisible()) {
+            cleanPlaces();
             me.setVisible(true);
         } else {
+            cleanPlaces();
             me.toFront();
         }
     }

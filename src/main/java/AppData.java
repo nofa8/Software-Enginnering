@@ -285,7 +285,9 @@ public class AppData implements Serializable{
 
         return new LinkedList<>(filteredStream.toList());
     }
-
+    public HashMap<Integer, Socio> getSocios() {
+        return new HashMap<>(socios);
+    }
     public int eliminarObra(Obra obra) {
         if (obra == null) {
             return -1;

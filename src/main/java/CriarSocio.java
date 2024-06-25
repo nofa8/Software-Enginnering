@@ -127,21 +127,12 @@ public class CriarSocio extends JFrame{
                     return;
                 }
                 Distrito dist = Distrito.fromFormattedString(dis);
-//                Distrito dist;
-//                dist = Distrito.valueOf(dis);
-//                try{
-//                    dist = Distrito.valueOf(dis);
-//                }catch (IllegalArgumentException exception){
-//                    JOptionPane.showMessageDialog(me,
-//                            "Ocurreu um erro com os dropdowns!\n");
-//                    return;
-//                }
 
                 Socio novoSocio = new Socio(nom,nif,morada,tele,cidade,numSocio);
                 AppData.getInstance().adicionarSocio(novoSocio);
                 JOptionPane.showMessageDialog(null,
-                        "Obra criada com sucesso!\n");
-                PublicacoesPage.showPubPage();
+                        "SOcio criada com sucesso!\n");
+                SociosPage.showSocPage();
                 me.dispose();
             }
         });

@@ -132,8 +132,10 @@ public class AppData implements Serializable{
         if (obra == null) {
             return -1;
         }
-        if (obras.contains(obra)){
-            return 1;
+        for (Obra obraExistente : obras) {
+            if (obraExistente.getISBN() == obra.getISBN()) {
+                return 1;
+            }
         }
         for (Obra obraexistente : obras) {
             if (obraexistente.getISBN().equals(obra.getISBN())) {
@@ -141,6 +143,17 @@ public class AppData implements Serializable{
             }
         }
         obras.add(obra);
+        return 0;
+    }
+
+    public int adicionarSocio(Socio socio) {
+        if (socio == null) {
+            return -1;
+        }
+        if (socios.containsKey(socio.getNumero())) {
+            return -2;
+        }
+        socios.put(socio.getNumero(), socio);
         return 0;
     }
 

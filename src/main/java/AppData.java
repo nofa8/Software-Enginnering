@@ -1,7 +1,10 @@
 import Modelos.*;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AppData implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -257,5 +260,40 @@ public class AppData implements Serializable{
         }
 
         return obra.eliminarExemplar(codigoExemplar);
+    }
+
+    public LinkedList<Emprestimo> getEmprestimosAtrasados() {
+        LocalDate today = LocalDate.now();
+        return emprestimos.stream()
+                .filter(emprestimo -> emprestimo.getDataDevolucaoPrevista().isBefore(today) &&
+                        emprestimo.getDataDevolucaoEfetiva() == null)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+    public LinkedList<Emprestimo> filtrarEmprestimos(String codigo, int socio, boolean selected) {
+        LinkedList<Emprestimo> emprestimosFiltrados = selected ? getEmprestimosAtrasados() : new LinkedList<>(emprestimos);
+
+        Stream<Emprestimo> filteredStream = emprestimosFiltrados.stream();
+
+        if (codigo != null) {
+            filteredStream = filteredStream.filter(
+                    emprestimo -> emprestimo.getExemplar().getCodigo().equals(codigo));
+        }
+
+        if (socio != 0) {
+            filteredStream = filteredStream.filter(emprestimo -> emprestimo.getSocio().getNumero() == (socio));
+        }
+
+        return new LinkedList<>(filteredStream.toList());
+    }
+
+    public int eliminarObra(Obra obra) {
+        if (obra == null) {
+            return -1;
+        }
+        if (!obras.contains(obra)) {
+            return 1;
+        }
+        obras.remove(obra);
+        return 0;
     }
 }

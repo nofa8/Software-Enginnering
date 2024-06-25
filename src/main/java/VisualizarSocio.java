@@ -80,7 +80,13 @@ public class VisualizarSocio extends JFrame{
 
             }
         });
-
+        pagamentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                me.show(false);
+                Pagamentos.showPagamentosPage(socio);
+            }
+        });
 
     }
 

@@ -113,6 +113,7 @@ public class EmprestimosPage extends JFrame{
                             "Empréstimo não Encontrado\n");
                     return;
                 }
+                atualizarEmprestimos();
                 JOptionPane.showMessageDialog(EmprestimosPage.this,
                         "Devolução realizada com sucesso!\n");
             }
@@ -208,21 +209,23 @@ public class EmprestimosPage extends JFrame{
         }
 
     }
+
     private String formatar(Emprestimo emprestimo){
-        String detalhesEmprestimo = "";
-        int value = Math.min(34,Integer.toString(emprestimo.getSocio().getNumero()).length());
-        for (int i = 0; i < 35- value; i++){
+        String detalhesEmprestimo = " "+ (emprestimo.getDataDevolucaoEfetiva()!= null ? "Terminado": "Ativo");
+        int valur = width/30;
+        int value = Math.min(valur-1,Integer.toString(emprestimo.getSocio().getNumero()).length()+1);
+        for (int i = 0; i < valur- value; i++){
             detalhesEmprestimo += " ";
         }
 
-        detalhesEmprestimo += emprestimo.getSocio().getNumero() + "  ";
-        value = Math.min(64,(emprestimo.getExemplar().getObra().getTitulo() + " - "+ emprestimo.getExemplar().getCodigo()).length());
-        for (int i = 0; i < 65- value; i++){
+        detalhesEmprestimo += " "+emprestimo.getSocio().getNumero() + "  ";
+        value = Math.min(valur*2-1,(emprestimo.getExemplar().getObra().getTitulo() + " - "+ emprestimo.getExemplar().getCodigo()).length());
+        for (int i = 0; i < valur*2- value; i++){
             detalhesEmprestimo += " ";
         }
         detalhesEmprestimo += emprestimo.getExemplar().getObra().getTitulo() + " - "+ emprestimo.getExemplar().getCodigo() + "  ";
-        value = Math.min(64,(emprestimo.getDataEmprestimo().toString()).length());
-        for (int i = 0; i < 65- value; i++){
+        value = Math.min(valur*2-1,(emprestimo.getDataEmprestimo().toString()).length());
+        for (int i = 0; i < valur*2- value; i++){
             detalhesEmprestimo += " ";
         }
         detalhesEmprestimo += emprestimo.getDataEmprestimo();

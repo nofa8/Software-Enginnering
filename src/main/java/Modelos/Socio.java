@@ -34,6 +34,10 @@ public class Socio implements Serializable {
          * */
     }
 
+    public void setDataProximoPagamentoAnuidade(LocalDate dataProximoPagamentoAnuidade) {
+        this.dataProximoPagamentoAnuidade = dataProximoPagamentoAnuidade;
+    }
+
     public enum PreferenciaComunicacao {
         SMS, EMAIL
     }
@@ -82,7 +86,7 @@ public class Socio implements Serializable {
     }
 
     public void verificarAnuidade() {
-        anuidadeEmDia = LocalDate.now().isBefore(dataProximoPagamentoAnuidade.plusYears(1));
+        anuidadeEmDia = LocalDate.now().isBefore(dataProximoPagamentoAnuidade);
     }
 
     // Getters and setters

@@ -80,4 +80,8 @@ public class Emprestimo  implements Serializable {
                 ", multa=" + multa +
                 '}';
     }
+
+    public void setDataDevolucaoPrevista(LocalDate localDate) {
+        dataDevolucaoPrevista = localDate;
+    }
 }

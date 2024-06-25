@@ -146,9 +146,7 @@ public class ConfiguracoesPage extends JFrame{
                 }
             }
         });
-
     }
-
     public static void showConfPage() {
         if (mainFrame == null) {
             mainFrame = new ConfiguracoesPage();

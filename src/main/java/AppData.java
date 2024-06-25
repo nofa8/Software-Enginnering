@@ -21,7 +21,6 @@ public class AppData implements Serializable{
     private LinkedList<Emprestimo> emprestimos;
     private LinkedList<Reserva> reservas;
 
-
     private AppData() {
         // Private constructor to prevent instantiation
         loadFromFile();
@@ -387,6 +386,7 @@ public class AppData implements Serializable{
         emprestimos.add(emprestimonovo);
         socio.adicionarEmprestimo(emprestimonovo);
 
+
     }
 
     public void adicionarReserva(Obra obra, String numSocio) {
@@ -438,5 +438,82 @@ public class AppData implements Serializable{
     }
 
 
+    public int totalRequisicoes() {
+        if (emprestimos.isEmpty() || obras.isEmpty()) {
+            return 0;
+        }
+        else{
+            int i = 0;
+            for (Obra obra : obras) {
+                for(Exemplar ex : obra.getExemplares()){
+                    if (!ex.isDisponivel()) {
+                        i++;
+                    }
+                }
+            }
+            return i;
+        }
+    }
 
+    public int totalDisponiveis() {
+        if (emprestimos.isEmpty() || obras.isEmpty()) {
+            return 0;
+        }
+        else{
+            int i = 0;
+            for (Obra obra : obras) {
+                for(Exemplar ex : obra.getExemplares()){
+                    if (ex.isDisponivel()) {
+                        i++;
+                    }
+                }
+            }
+            return i;
+        }
+    }
+
+    public int today(){
+        if (emprestimos.isEmpty() || obras.isEmpty()) {
+            return 0;
+        }
+        else{
+            int i = 0;
+            for (Emprestimo emprestimo : emprestimos) {
+                if (emprestimo.getDataEmprestimo().atStartOfDay().isEqual(LocalDate.now().atStartOfDay())) {
+                    i++;
+                }
+            }
+            return i;
+        }
+    }
+
+    public int week(){
+        if (emprestimos.isEmpty() || obras.isEmpty()) {
+            return 0;
+        }
+        else{
+            int i = 0;
+            for (Emprestimo emprestimo : emprestimos) {
+                if (emprestimo.getDataEmprestimo().atStartOfDay().isAfter(LocalDate.now().atStartOfDay().minusDays(7))) {
+                    i++;
+                }
+            }
+            return i;
+        }
+    }
+
+    public int month(){
+        if (emprestimos.isEmpty() || obras.isEmpty()) {
+            return 0;
+        }
+        else{
+            int i = 0;
+            for (Emprestimo emprestimo : emprestimos) {
+                if (emprestimo.getDataEmprestimo().atStartOfDay().isAfter(LocalDate.now().atStartOfDay().minusDays(30))) {
+                    i++;
+                }
+            }
+            return i;
+        }
+    }
 }

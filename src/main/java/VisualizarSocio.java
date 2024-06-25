@@ -30,8 +30,7 @@ public class VisualizarSocio extends JFrame{
     private JButton pagamentosButton;
     private int width;
     private int height;
-    private Socio socio;
-    public VisualizarSocio(Socio novo) {
+    public VisualizarSocio(Socio socio) {
         super("Visualizar Sócio");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -43,7 +42,7 @@ public class VisualizarSocio extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        socio = novo;
+
         me = this;
         atualizarSocio(socio);
 
@@ -63,13 +62,26 @@ public class VisualizarSocio extends JFrame{
                 EditarSocio.showEditarSocPage(socio);
             }
         });
-        pagamentosButton.addActionListener(new ActionListener() {
+
+        eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                boolean removed = AppData.getInstance().removerSocio(socio.getNumero());
+                if (removed) {
+                    JOptionPane.showMessageDialog(VisualizarSocio.this,
+                            "Sócio removido com sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(VisualizarSocio.this,
+                            "Erro ao remover o sócio.");
+                }
                 me.show(false);
-                Pagamentos.showPagamentosPage(socio);
+                SociosPage.showSocPage();
+
             }
         });
+
+
     }
 
     private static void atualizarSocio(Socio socio) {

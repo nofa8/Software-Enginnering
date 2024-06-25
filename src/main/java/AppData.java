@@ -121,10 +121,6 @@ public class AppData implements Serializable{
         return new LinkedList<>(obras);
     }
 
-    public HashMap<Integer, Socio> getSocios() {
-        return new HashMap<>(socios);
-    }
-
     public void pagarAnuidade(Socio socio) {
         if (socio == null) {
             return;
@@ -166,6 +162,10 @@ public class AppData implements Serializable{
         }
         socios.put(socio.getNumero(), socio);
         return 0;
+    }
+
+    public boolean removerSocio(int numero) {
+        return socios.remove(numero) != null;
     }
 
     public LinkedList<Reserva> getReservas() {

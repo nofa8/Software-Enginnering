@@ -101,7 +101,7 @@ public class CriarEmprestimo extends JFrame {
                     }
                 }
                 String numSocio = textSocioNumero.getText();
-                if(exemplarRequisitar == null || numSocio == null){
+                if(exemplarRequisitar == null || numSocio.isEmpty()){
                     JOptionPane.showMessageDialog(CriarEmprestimo.this,
                             "Valores inválidos para criar Empréstimo","Empréstimo não criado",
                             JOptionPane.WARNING_MESSAGE);
@@ -122,7 +122,7 @@ public class CriarEmprestimo extends JFrame {
                 Obra obra = obras.get(listObrasEmprestimo.getSelectedIndex());
                 String numSocio = textSocioNumero.getText();
 
-                if(obra == null || numSocio ==null){
+                if(obra == null || numSocio.isEmpty()){
                     JOptionPane.showMessageDialog(CriarEmprestimo.this,
                             "Valores inválidos para criar Reserva","Reserva não criada",
                             JOptionPane.WARNING_MESSAGE);

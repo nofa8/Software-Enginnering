@@ -1,3 +1,4 @@
+import Modelos.Emprestimo;
 import Modelos.Reserva;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class ReservasPage extends JFrame{
     private DefaultListModel<String> listModel;
     private int width;
     private int height;
+    private static LinkedList<Reserva> reservas;
     public ReservasPage() {
         super("Página de Reservas");
         this.setContentPane(mainPanel);
@@ -39,23 +41,7 @@ public class ReservasPage extends JFrame{
         listModel = new DefaultListModel<>();
         listReservas.setModel(listModel);
 
-        LinkedList<Reserva> reservas = AppData.getInstance().getReservas();
-
-        for (Reserva reserva : reservas)
-        {
-            int count = 0;
-            for (int i = 0; i < reservas.size(); i++) {
-                count = 0;
-                if(reserva.getObra() == reservas.get(i).getObra()){
-                    count++;
-                }
-            }
-            String detalhesReserva = reserva.getObra().getISBN() +
-                    " | " + reserva.getObra().getTitulo() +
-                    " | " + count;
-            listModel.addElement(detalhesReserva);
-        }
-
+        reservas = AppData.getInstance().getReservas();
 
         voltarButton.addActionListener(new ActionListener() {
             @Override
@@ -69,7 +55,57 @@ public class ReservasPage extends JFrame{
 
             }
         });
+        atualizar();
     }
+    private static void atualizarReservas(){
+        reservas = AppData.getInstance().getReservas();
+        SwingUtilities.invokeLater(() -> {
+            if (mainFrame != null) {
+                mainFrame.atualizar();
+            }
+        });
+    }
+    private void atualizar(){
+        listModel = new DefaultListModel<>();
+        listReservas.setModel(listModel);
+        if ( reservas == null){
+            return;
+        }
+        for(Reserva reserva : reservas){
+            listModel.addElement(formatar(reserva));
+        }
+
+    }
+    private String formatar(Reserva reserva){
+        String detalhesReserva = "";
+        int value = Math.min(34,Integer.toString(reserva.getSocio().getNumero()).length());
+        for (int i = 0; i < 35- value; i++){
+            detalhesReserva += " ";
+        }
+        detalhesReserva += reserva.getObra().getISBN()+ "  ";
+
+
+        value = Math.min(64,(reserva.getObra().getTitulo() + " - "+ reserva.getSocio().getNumero()).length());
+        for (int i = 0; i < 65- value; i++){
+            detalhesReserva += " ";
+        }
+        detalhesReserva += reserva.getObra().getTitulo() + " - "+ reserva.getSocio().getNumero() + "  ";
+        int count = 0;
+        for (int i = 0; i < reservas.size(); i++) {
+            count = 0;
+            if(reserva.getObra() == reservas.get(i).getObra()){
+                count++;
+            }
+        }
+
+        value = Math.min(64,Integer.toString(count).length());
+        for (int i = 0; i < 65- value; i++){
+            detalhesReserva += " ";
+        }
+        detalhesReserva += count+"   ";
+        return detalhesReserva;
+    }
+
     public static void showReqPage() {
         if (mainFrame == null) {
             mainFrame = new ReservasPage();

@@ -55,6 +55,7 @@ public class AppData implements Serializable{
                 this.obras = loadedData.obras;
                 this.socios = loadedData.socios;
                 this.emprestimos = loadedData.emprestimos;
+                this.reservas = loadedData.reservas;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 // Initialize with default values if loading fails
@@ -72,6 +73,7 @@ public class AppData implements Serializable{
         anualidade = 0;
         obras = new LinkedList<>();
         socios = new HashMap<>();
+        reservas = new LinkedList<>();
     }
 
 
@@ -286,9 +288,7 @@ public class AppData implements Serializable{
 
         return new LinkedList<>(filteredStream.toList());
     }
-    public HashMap<Integer, Socio> getSocios() {
-        return new HashMap<>(socios);
-    }
+
     public int eliminarObra(Obra obra) {
         if (obra == null) {
             return -1;
@@ -317,10 +317,26 @@ public class AppData implements Serializable{
     }
 
     public void adicionarReserva(Obra obra, String numSocio) {
+        if(this.reservas == null){
+            this.reservas = new LinkedList<Reserva>();
+        }
+
         Socio socio = socios.get(Integer.parseInt(numSocio));
         Reserva reserva = new Reserva(obra, socio);
         System.out.println(reservas);
 
-        this.reservas.add(reserva);
+        reservas.add(reserva);
+    }
+
+    public int realizarDevolucao(Emprestimo emprestimo) {
+        if(emprestimo.getDataDevolucaoEfetiva() != null){
+            return -1;
+        }
+        int devolverIndex =emprestimos.indexOf(emprestimo);
+        if(devolverIndex < 0){
+            return 1;
+        }
+        emprestimos.get(devolverIndex).realizarDevolucao(multaDiaria);
+        return 0;
     }
 }

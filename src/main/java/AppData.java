@@ -285,4 +285,15 @@ public class AppData implements Serializable{
 
         return new LinkedList<>(filteredStream.toList());
     }
+
+    public int eliminarObra(Obra obra) {
+        if (obra == null) {
+            return -1;
+        }
+        if (!obras.contains(obra)) {
+            return 1;
+        }
+        obras.remove(obra);
+        return 0;
+    }
 }

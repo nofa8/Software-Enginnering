@@ -216,7 +216,6 @@ public class EmprestimosPage extends JFrame{
         for (int i = 0; i < 65- value; i++){
             detalhesEmprestimo += " ";
         }
-
         return detalhesEmprestimo;
     }
     public static void showReqPage() {

@@ -63,7 +63,6 @@ public class CriarPublicacao extends JFrame{
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                me.show(false);
                 me.dispose();
             }
         });
@@ -196,15 +195,43 @@ public class CriarPublicacao extends JFrame{
             }
         });
     }
+    private static void cleanPlaces() {
+        SwingUtilities.invokeLater(() -> {
+            if (me != null) {
+                me.clean();
+            }
+        });
+    }
+
+    private void clean() {
+        // Atualizar os campos do formulário com os dados da obra
+        nedicao.setText("");
+        tituloTextField.setText("");
+        isbn.setText("");
+        autor.setText("");
+        ano.setText("");
+        quantidade.setText("");
+        // Set initial values for combo boxes
+        editora.setSelectedItem(editora.getItemAt(0));
+        distribuidor.setSelectedItem(distribuidor.getItemAt(0));
+        genero.setSelectedItem(genero.getItemAt(0));
+        subgenero.setSelectedItem(subgenero.getItemAt(0));
+        sala.setSelectedItem(sala.getItemAt(0));
+        estante.setSelectedItem(estante.getItemAt(0));
+        prateleira.setSelectedItem(prateleira.getItemAt(0));
+    }
 
     public static void showCriarPubPage() {
         if (me == null) {
             me = new CriarPublicacao();
         }
         if (!me.isVisible()) {
+            cleanPlaces();
             me.setVisible(true);
         } else {
             me.toFront();
         }
     }
+
+
 }

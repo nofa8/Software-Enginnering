@@ -229,6 +229,21 @@ public class PublicacoesPage extends JFrame{
                                 "Nenhum Exemplar Selecionado",
                                 JOptionPane.WARNING_MESSAGE);
                     }
+                    else{
+                        JOptionPane.showMessageDialog(PublicacoesPage.this,
+                                "O exemplar da obra foi eliminado com sucesso.",
+                                "Exemplar Eliminado",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        if (obra.getNumeroExemplares() == 0){
+
+                            int confirm = JOptionPane.showConfirmDialog(mainFrame, "A obra já não tem nenhum exemplar.\nDeseja eliminar a obra " + obra.getTitulo() + "?", "Confirmar Eliminação", JOptionPane.YES_NO_OPTION);
+                            if (confirm == JOptionPane.YES_OPTION) {
+                                AppData.getInstance().eliminarObra(obra);
+                                atualizarObras();
+                            }
+                        }
+                    }
+
 
                 } else {
                     // If no item is selected, show an error message
@@ -262,18 +277,23 @@ public class PublicacoesPage extends JFrame{
 
     private String formatar(Obra obra){
         String detalhesObra = "";
-        int value = Math.min(34,Integer.toString(obra.getNumeroEdicao()).length());
-        for (int i = 0; i < 35- value; i++){
+        int valur = width/30;
+        int value = Math.min(valur-1,Integer.toString(obra.getNumeroEdicao()).length());
+        for (int i = 0; i < valur- value; i++){
             detalhesObra += " ";
         }
         detalhesObra += obra.getNumeroEdicao() + "   ";
-        value = Math.min(64,obra.getTitulo().length());
-        for (int i = 0; i < 65- value; i++){
+        value = Math.min(2*valur-1,obra.getTitulo().length());
+        int sub = 0;
+        if (obra.getTitulo().length() > 2*valur-1){
+            sub = 2*valur-1 - obra.getTitulo().length();
+        }
+        for (int i = 0; i < 2*valur- value; i++){
             detalhesObra += " ";
         }
         detalhesObra += obra.getTitulo()+"   ";
-        value = Math.min(64,Integer.toString(obra.getAno()).length());
-        for (int i = 0; i < 65- value; i++){
+        value = Math.min(2*valur-1,Integer.toString(obra.getAno()).length());
+        for (int i = 0; i < 2*valur - value-sub; i++){
             detalhesObra += " ";
         }
         detalhesObra += obra.getAno();

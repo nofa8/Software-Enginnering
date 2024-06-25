@@ -40,7 +40,7 @@ public class PublicacoesPage extends JFrame{
     public PublicacoesPage() {
         super("Bought Page");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();
@@ -205,12 +205,35 @@ public class PublicacoesPage extends JFrame{
                         return;
                     }
 
+                    if (exemplares.getSelectedItem() == null){
+                        JOptionPane.showMessageDialog(PublicacoesPage.this,
+                                "Por favor, selecione um exemplar para eliminar .",
+                                "Nenhum Exemplar Selecionado",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
 
+                    int response = AppData.getInstance().eliminarExemplar(obra, (String) exemplares.getSelectedItem());
+                    if (response == -1){
+                        JOptionPane.showMessageDialog(PublicacoesPage.this,
+                                "Por favor, selecione um exemplar para eliminar .",
+                                "Nenhum Exemplar Selecionado",
+                                JOptionPane.WARNING_MESSAGE);
+                    }else if(response == 1){
+                        JOptionPane.showMessageDialog(PublicacoesPage.this,
+                                "O Exemplar selecionado ainda se encontra requesitado .",
+                                "Nenhum Exemplar Selecionado",
+                                JOptionPane.WARNING_MESSAGE);
+                    }else if(response == 2){
+                        JOptionPane.showMessageDialog(PublicacoesPage.this,
+                                "O exemplar da obra não foi encontrado.",
+                                "Nenhum Exemplar Selecionado",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
 
                 } else {
                     // If no item is selected, show an error message
                     JOptionPane.showMessageDialog(PublicacoesPage.this,
-                            "Por favor, selecione uma exemplar para eliminar .",
+                            "Por favor, selecione uma obra para eliminar um exemplar .",
                             "Nenhuma Obra Selecionada",
                             JOptionPane.WARNING_MESSAGE);
                 }

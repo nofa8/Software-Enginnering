@@ -186,5 +186,19 @@ public class Obra implements Serializable {
     public boolean hasAutor(String autor) {
         return autores.contains(autor);
     }
+
+    public int eliminarExemplar(String codigoExemplar) {
+        for (Exemplar ex : exemplares){
+            if (ex.getCodigo().equals(codigoExemplar)){
+                if (ex.isDisponivel()){
+                    exemplares.remove(ex);
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        }
+        return 2;
+    }
 }
 

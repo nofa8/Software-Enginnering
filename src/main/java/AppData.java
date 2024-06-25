@@ -135,6 +135,11 @@ public class AppData implements Serializable{
         if (obras.contains(obra)){
             return 1;
         }
+        for (Obra obraexistente : obras) {
+            if (obraexistente.getISBN().equals(obra.getISBN())) {
+                return 1;
+            }
+        }
         obras.add(obra);
         return 0;
     }
@@ -231,5 +236,13 @@ public class AppData implements Serializable{
 
     public void guardarExemplar(Exemplar exemplar) {
         obras.get(obras.indexOf(exemplar.getObra())).adicionarExemplar(exemplar);
+    }
+
+    public int eliminarExemplar(Obra obra, String codigoExemplar) {
+        if (obra == null || codigoExemplar == null) {
+            return -1;
+        }
+
+        return obra.eliminarExemplar(codigoExemplar);
     }
 }

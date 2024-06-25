@@ -31,7 +31,7 @@ public class AdicionarExemplar extends JFrame{
     public AdicionarExemplar(Obra obraUtilizacao) {
         super("Adicionar Exemplar");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
         obra = obraUtilizacao;
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();

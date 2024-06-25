@@ -18,7 +18,7 @@ public class Pagamentos extends JFrame{
     public Pagamentos(Socio socio) {
         super("Página de Pagamentos");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();

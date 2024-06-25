@@ -28,7 +28,7 @@ public class VisualizarPublicacao extends JFrame{
     public VisualizarPublicacao(Obra obra) {
         super("Visualizar Obra");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();

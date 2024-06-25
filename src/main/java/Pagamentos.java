@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Pagamentos extends JFrame{
+    private static Pagamentos me;
     private JPanel mainPanel;
     private JTextField multaTotal;
     private JButton pagarMultaButton;
@@ -15,7 +16,8 @@ public class Pagamentos extends JFrame{
     private JLabel nomSocio;
     private int width;
     private int height;
-    public Pagamentos(Socio socio) {
+    private Socio socio;
+    public Pagamentos(Socio novo) {
         super("Página de Pagamentos");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -27,8 +29,8 @@ public class Pagamentos extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
-
+        me = this;
+        socio = novo;
         nomSocio.setText(socio.getNome());
         proximaAnualidade.setText(String.valueOf(socio.getDataProximoPagamentoAnuidade().plusYears(1)));
         anualidade.setText(String.valueOf(AppData.getInstance().getAnualidade()));
@@ -46,6 +48,28 @@ public class Pagamentos extends JFrame{
                 AppData.getInstance().pagarMulta(socio);
             }
         });
+    }
+
+    private static void atualizarSocio(Socio socio) {
+        me.socio = socio;
+        me.nomSocio.setText(socio.getNome());
+        me.proximaAnualidade.setText(String.valueOf(socio.getDataProximoPagamentoAnuidade().plusYears(1)));
+        me.anualidade.setText(String.valueOf(AppData.getInstance().getAnualidade()));
+        me.multaTotal.setText(String.valueOf(socio.getValorEmDivida()));
+    }
+
+
+    public static void showPagamentosPage(Socio socio) {
+        if (me == null) {
+            me = new Pagamentos(socio);
+        }
+        if (!me.isVisible()) {
+            atualizarSocio(socio);
+            me.setVisible(true);
+        } else {
+            atualizarSocio(socio);
+            me.toFront();
+        }
     }
 
 }

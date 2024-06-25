@@ -316,9 +316,6 @@ public class AppData implements Serializable{
         return 0;
     }
 
-    public HashMap<Integer, Socio> getSocios() {
-        return new HashMap<>(socios);
-    }
 
     public void adicionarEmprestimo(Exemplar exemplarRequisitar, String numSocio) {
 

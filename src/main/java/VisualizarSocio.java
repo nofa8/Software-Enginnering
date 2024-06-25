@@ -30,7 +30,8 @@ public class VisualizarSocio extends JFrame{
     private JButton pagamentosButton;
     private int width;
     private int height;
-    public VisualizarSocio(Socio socio) {
+    private Socio socio;
+    public VisualizarSocio(Socio novo) {
         super("Visualizar Sócio");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -42,7 +43,7 @@ public class VisualizarSocio extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
+        socio = novo;
         me = this;
         atualizarSocio(socio);
 
@@ -60,6 +61,13 @@ public class VisualizarSocio extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 me.show(false);
                 EditarSocio.showEditarSocPage(socio);
+            }
+        });
+        pagamentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                me.show(false);
+                Pagamentos.showPagamentosPage(socio);
             }
         });
     }

@@ -177,7 +177,7 @@
                         </constraints>
                         <properties>
                           <font style="1"/>
-                          <text value="24/06/26"/>
+                          <text value="label"/>
                         </properties>
                       </component>
                     </children>

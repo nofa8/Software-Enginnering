@@ -16,6 +16,7 @@ public class Pagamentos extends JFrame{
     private JButton pagarAnualidadeButton;
     private JLabel proximaAnualidade;
     private JLabel nomSocio;
+    private JButton voltarButton;
     private int width;
     private int height;
     private Socio socio;
@@ -76,12 +77,20 @@ public class Pagamentos extends JFrame{
 
             }
         });
+        voltarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VisualizarSocio.showVisSocPage(socio);
+                me.dispose();
+            }
+        });
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 me = null;
             }
         });
+
     }
 
     private static void atualizarSocio(Socio socio) {

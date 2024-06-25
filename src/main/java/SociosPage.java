@@ -143,6 +143,49 @@ public class SociosPage extends JFrame{
                 }
             }
         });
+        pesquisarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nSoci = numeroSocio.getText();
+
+                String nomes = nome.getText();
+                if (nomes.isEmpty()){
+                    nomes = null;
+                }
+
+                int soci = 0;
+                if (nSoci.isEmpty()){
+                    nSoci = null;
+                }
+                else{
+                    try {
+                        soci = Integer.parseInt(nSoci);
+                    } catch (NumberFormatException exception) {
+                        JOptionPane.showMessageDialog(SociosPage.this,
+                                "Sócio tem que ser um número inteiro!\n");
+                        return;
+                    }
+                    if (soci < 0) {
+                        JOptionPane.showMessageDialog(SociosPage.this,
+                                "Sócio tem que ser um inteiro positivo!\n");
+                        return;
+                    }
+
+                    if (!socios.containsKey(soci)){
+                        JOptionPane.showMessageDialog(SociosPage.this,
+                                "Número de Sócio inválido",
+                                "Número",
+                                JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                }
+
+
+
+                socios = AppData.getInstance().filtrarSocios(valorEmAtrasoRadioButton.isSelected(), soci, nomes);
+                atualizar();
+            }
+        });
     }
 
     private static void atualizarSocios(){

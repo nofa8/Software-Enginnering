@@ -307,6 +307,38 @@ public class AppData implements Serializable{
         return new LinkedList<>(filteredStream.toList());
     }
 
+    public HashMap<Integer, Socio> filtrarSocios(boolean selected, int soci, String nom) {
+        HashMap<Integer, Socio> sociosFiltrados = selected ? getSociosAtrasados() : new HashMap<>(socios);
+
+        return sociosFiltrados.entrySet().stream()
+                .filter(entry -> {
+                    Socio socio = entry.getValue();
+                    boolean matchId = soci == 0 || socio.getNumero()== soci;
+                    boolean matchNom = nom == null || socio.getNome().toLowerCase().contains(nom.toLowerCase());
+                    return matchId && matchNom;
+                })
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (v1, v2) -> v1,
+                        HashMap::new
+                ));
+    }
+
+    private HashMap<Integer, Socio> getSociosAtrasados() {
+        LocalDate today = LocalDate.now();
+        return emprestimos.stream()
+                .filter(emprestimo -> emprestimo.getDataDevolucaoPrevista().isBefore(today) &&
+                        emprestimo.getDataDevolucaoEfetiva() == null)
+                .map(Emprestimo::getSocio)
+                .distinct()
+                .collect(Collectors.toMap(
+                        Socio::getNumero,
+                        socio -> socio,
+                        (v1, v2) -> v1,
+                        HashMap::new
+                ));
+    }
 
     public LinkedList<Reserva> filtrarReservas(boolean selected, int soc) {
         Stream<Reserva> filteredStream = reservas.stream();

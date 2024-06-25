@@ -41,13 +41,39 @@ public class Pagamentos extends JFrame{
         pagarAnualidadeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AppData.getInstance().pagarAnuidade(socio);
+                Socio response = AppData.getInstance().pagarAnuidade(socio);
+                if (response == null){
+                    JOptionPane.showMessageDialog(me,
+                            "Pagamento não efetuado. Sócio não encontrado.",
+                            "Anualidade",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                JOptionPane.showMessageDialog(me,
+                        "Pagamento efetuado com sucesso.",
+                        "Anualidade",
+                        JOptionPane.INFORMATION_MESSAGE);
+                atualizarSocio(response);
+
             }
         });
         pagarMultaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AppData.getInstance().pagarMulta(socio);
+                Socio response = AppData.getInstance().pagarMulta(socio);
+                if (response == null){
+                    JOptionPane.showMessageDialog(me,
+                            "Pagamento não efetuado. Sócio não encontrado.",
+                            "Multa",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                JOptionPane.showMessageDialog(me,
+                        "Pagamento efetuado com sucesso.",
+                        "Multa",
+                        JOptionPane.INFORMATION_MESSAGE);
+                atualizarSocio(response);
+
             }
         });
         this.addWindowListener(new WindowAdapter() {

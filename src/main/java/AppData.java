@@ -121,18 +121,20 @@ public class AppData implements Serializable{
         return new LinkedList<>(obras);
     }
 
-    public void pagarAnuidade(Socio socio) {
+    public Socio pagarAnuidade(Socio socio) {
         if (socio == null) {
-            return;
+            return null;
         }
         socio.pagarAnuidade();
+        return socio;
     }
 
-    public void pagarMulta(Socio socio) {
+    public Socio pagarMulta(Socio socio) {
         if (socio == null) {
-            return;
+            return null;
         }
         socio.pagarDivida(socio.getValorEmDivida());
+        return socio;
     }
 
     public int adicionarObra(Obra obra) {
@@ -322,10 +324,13 @@ public class AppData implements Serializable{
         int numdiasEmprestimo = this.duracaoEmprestimo;
 
         Socio socio = socios.get(Integer.parseInt(numSocio));
-
+        if (!socio.podeRequisitarLivros(limiteEmprestimosSim)){
+            return;
+        }
         Emprestimo emprestimonovo = new Emprestimo(exemplarRequisitar, socio, numdiasEmprestimo);
         exemplarRequisitar.setDisponivel(false);
         emprestimos.add(emprestimonovo);
+        socio.adicionarEmprestimo(emprestimonovo);
 
     }
 
@@ -357,5 +362,23 @@ public class AppData implements Serializable{
     public HashMap<Integer, Socio> getSocios() {
 
         return new HashMap<>(socios);
+    }
+
+    public int alertarDevedores() {
+        if (socios.isEmpty()){
+            return -1;
+        }
+        int i = 0;
+        for (Socio socio : socios.values()) {
+            if (socio.getValorEmDivida() != 0) {
+                socio.alertarDevedorDivida();
+                i++;
+            }
+            if(!socio.isAnuidadeEmDia()){
+                socio.alertarDevedorAnualidade();
+                i++;
+            }
+        }
+        return i;
     }
 }

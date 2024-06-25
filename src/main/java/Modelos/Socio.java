@@ -23,6 +23,17 @@ public class Socio implements Serializable {
 
     private PreferenciaComunicacao preferenciaComunicacao;
 
+    public void alertarDevedorDivida() {
+        /*
+        * Enviado uma mensagem e/ou email ao devedor com o valor - dividas/multas
+        * */
+    }
+    public void alertarDevedorAnualidade() {
+        /*
+         * Enviado uma mensagem e/ou email ao devedor com o valor - anualidade
+         * */
+    }
+
     public enum PreferenciaComunicacao {
         SMS, EMAIL
     }
@@ -66,7 +77,7 @@ public class Socio implements Serializable {
     }
 
     public void pagarAnuidade() {
-        dataProximoPagamentoAnuidade = LocalDate.now();
+        dataProximoPagamentoAnuidade = LocalDate.now().plusYears(1);
         anuidadeEmDia = true;
     }
 

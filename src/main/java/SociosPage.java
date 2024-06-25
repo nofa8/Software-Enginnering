@@ -2,6 +2,7 @@ import Modelos.Exemplar;
 import Modelos.Socio;
 
 import javax.swing.*;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -123,6 +124,23 @@ public class SociosPage extends JFrame{
             @Override
             public void windowClosed(WindowEvent e) {
                 mainFrame = null;
+            }
+        });
+        alertarDevedoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int resposta = AppData.getInstance().alertarDevedores();
+                if (resposta <= 0){
+                    JOptionPane.showMessageDialog(mainFrame,
+                            "Não existem sócios com dívida.",
+                            "Alerta de Devedores",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(mainFrame,
+                            "Foram encontrados " + resposta + " empréstimos atrasados.",
+                            "Alerta de Devedores",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
     }

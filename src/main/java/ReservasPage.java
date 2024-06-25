@@ -1,10 +1,7 @@
-import Modelos.Reserva;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 
 public class ReservasPage extends JFrame{
     private static ReservasPage mainFrame;
@@ -18,9 +15,8 @@ public class ReservasPage extends JFrame{
     private JTextField numSocio;
     private JButton pesquisarButton;
     private JButton visualizarButton;
+    private JTable table1;
     private JButton voltarButton;
-    private JList listReservas;
-    private DefaultListModel<String> listModel;
     private int width;
     private int height;
     public ReservasPage() {
@@ -36,37 +32,11 @@ public class ReservasPage extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        listModel = new DefaultListModel<>();
-        listReservas.setModel(listModel);
-
-        LinkedList<Reserva> reservas = AppData.getInstance().getReservas();
-
-        for (Reserva reserva : reservas)
-        {
-            int count = 0;
-            for (int i = 0; i < reservas.size(); i++) {
-                count = 0;
-                if(reserva.getObra() == reservas.get(i).getObra()){
-                    count++;
-                }
-            }
-            String detalhesReserva = reserva.getObra().getISBN() +
-                    " | " + reserva.getObra().getTitulo() +
-                    " | " + count;
-            listModel.addElement(detalhesReserva);
-        }
-
 
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.dispose();
-            }
-        });
-        visualizarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
+                mainFrame.show(false);
             }
         });
     }

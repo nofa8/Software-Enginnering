@@ -23,7 +23,7 @@ public class VisualizarEmprestimo extends JFrame
     public VisualizarEmprestimo(Emprestimo emprestimo) {
         super("Visualizar Empréstimo");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -43,6 +43,7 @@ public class VisualizarEmprestimo extends JFrame
         labelNumDias.setText(Long.toString(dias));
 
         labelMulta.setText(Float.toString(emprestimo.getDiasAtraso()*AppData.getInstance().getMultaDiaria()));
+
 
         voltarButton.addActionListener(new ActionListener() {
             @Override

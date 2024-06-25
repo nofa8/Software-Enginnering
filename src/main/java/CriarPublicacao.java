@@ -30,7 +30,7 @@ public class CriarPublicacao extends JFrame{
     public CriarPublicacao() {
         super("Criar Publicação");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();

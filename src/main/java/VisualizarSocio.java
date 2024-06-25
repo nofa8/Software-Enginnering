@@ -30,7 +30,7 @@ public class VisualizarSocio extends JFrame{
     public VisualizarSocio() {
         super("Visualizar Sócio");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();

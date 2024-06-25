@@ -37,7 +37,7 @@ public class EmprestimosPage extends JFrame{
     public EmprestimosPage() {
         super("Empréstimos");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();

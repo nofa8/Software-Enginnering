@@ -62,6 +62,26 @@ public class VisualizarSocio extends JFrame{
                 EditarSocio.showEditarSocPage(socio);
             }
         });
+
+        eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                boolean removed = AppData.getInstance().removerSocio(socio.getNumero());
+                if (removed) {
+                    JOptionPane.showMessageDialog(VisualizarSocio.this,
+                            "Sócio removido com sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(VisualizarSocio.this,
+                            "Erro ao remover o sócio.");
+                }
+                me.show(false);
+                SociosPage.showSocPage();
+
+            }
+        });
+
+
     }
 
     private static void atualizarSocio(Socio socio) {

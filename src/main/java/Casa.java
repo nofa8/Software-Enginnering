@@ -60,6 +60,12 @@ public class Casa extends JFrame{
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             AppData.getInstance().saveToFile();
         }));
+        sairButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.dispose();
+            }
+        });
     }
 
     public static void showCasaPage() {

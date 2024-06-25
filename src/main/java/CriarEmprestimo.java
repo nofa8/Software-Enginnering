@@ -1,5 +1,7 @@
+import Modelos.Emprestimo;
 import Modelos.Exemplar;
 import Modelos.Obra;
+import Modelos.Reserva;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -20,8 +22,8 @@ public class CriarEmprestimo extends JFrame {
     private JComboBox comboBoxExemplares;
     private JLabel labelData;
     private JTextField textSocioNumero;
-    private JButton requisitarButton1;
     private JButton requisitarButton;
+    private JButton reservarButton;
     private JTextField textTituloSearch;
     private JLabel labelObraTitulo;
     private JButton voltarButton;
@@ -50,16 +52,33 @@ public class CriarEmprestimo extends JFrame {
                 atualizarObras();
             }
         });
+
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                int disponiveis = 0;
                 if(listObrasEmprestimo.getSelectedIndex() != -1){
                     Obra obra = obras.get(listObrasEmprestimo.getSelectedIndex());
                     labelObraTitulo.setText(obra.getTitulo());
                     for(Exemplar exem : obra.getExemplares()){
-                        comboBoxExemplares.addItem(exem.getCodigo());
+                        if(exem.isDisponivel()){
+                            comboBoxExemplares.addItem(exem.getCodigo());
+                            disponiveis++;
+                        }
+
+
+                    }
+                    if(disponiveis == 0){
+                        requisitarButton.setEnabled(false);
+                        reservarButton.setEnabled(true);
+                    }
+                    else{
+                        requisitarButton.setEnabled(true);
+                        reservarButton.setEnabled(false);
                     }
                     labelData.setText(LocalDate.now().toString() + " - " + LocalDate.now().plusDays(AppData.getInstance().getDuracaoEmprestimo()));
+
                 }
+
             }
         };
         listObrasEmprestimo.addListSelectionListener(listSelectionListener);
@@ -68,6 +87,52 @@ public class CriarEmprestimo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mainFrame.dispose();
+            }
+        });
+        requisitarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Obra obra = obras.get(listObrasEmprestimo.getSelectedIndex());
+                String codeExem = comboBoxExemplares.getSelectedItem().toString();
+                Exemplar exemplarRequisitar = null;
+                for(Exemplar exemplar: obra.getExemplares()){
+                    if(exemplar.getCodigo() == codeExem){
+                        exemplarRequisitar = exemplar;
+                    }
+                }
+                String numSocio = textSocioNumero.getText();
+                if(exemplarRequisitar == null || numSocio.isEmpty()){
+                    JOptionPane.showMessageDialog(CriarEmprestimo.this,
+                            "Valores inválidos para criar Empréstimo","Empréstimo não criado",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                AppData.getInstance().adicionarEmprestimo(exemplarRequisitar, numSocio);
+                JOptionPane.showMessageDialog(CriarEmprestimo.this,
+                        "Empréstimo criado com sucesso","Empréstimo criado",
+                        JOptionPane.INFORMATION_MESSAGE);
+                EmprestimosPage.showReqPage();
+                mainFrame.dispose();
+            }
+        });
+        reservarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Obra obra = obras.get(listObrasEmprestimo.getSelectedIndex());
+                String numSocio = textSocioNumero.getText();
+
+                if(obra == null || numSocio.isEmpty()){
+                    JOptionPane.showMessageDialog(CriarEmprestimo.this,
+                            "Valores inválidos para criar Reserva","Reserva não criada",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                AppData.getInstance().adicionarReserva(obra, numSocio);
+                JOptionPane.showMessageDialog(CriarEmprestimo.this,
+                        "Reserva criada com sucesso","Reserva criado",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
@@ -125,6 +190,4 @@ public class CriarEmprestimo extends JFrame {
             mainFrame.toFront();
         }
     }
-
-
 }

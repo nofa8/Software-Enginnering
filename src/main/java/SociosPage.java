@@ -1,12 +1,16 @@
+import Modelos.Exemplar;
 import Modelos.Socio;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
+import java.util.List;
 
 public class SociosPage extends JFrame{
     private static SociosPage mainFrame;
@@ -23,6 +27,7 @@ public class SociosPage extends JFrame{
     private JTextField numeroSocio;
     private JTextField nome;
     private JList list1;
+    private JButton pesquisarButton;
     private int width;
     private int height;
 
@@ -99,6 +104,20 @@ public class SociosPage extends JFrame{
                 CriarSocio.showCriarSocPage();
             }
         });
+
+        list1.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int index = list1.getSelectedIndex();
+                    if (index != -1) {
+                        visualizarButton.setEnabled(true);
+                    } else {
+                        visualizarButton.setEnabled(false);
+                    }
+                }
+            }
+        });
     }
 
     private static void atualizarSocios(){
@@ -113,7 +132,7 @@ public class SociosPage extends JFrame{
     private void atualizar(){
         listModel = new DefaultListModel<>();
         list1.setModel(listModel);
-        if (socios == null){
+        if (socios.isEmpty()){
             return;
         }
         for(Socio socio : socios.values()){

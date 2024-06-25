@@ -1,5 +1,6 @@
 import Modelos.*;
 
+import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -54,6 +55,7 @@ public class AppData implements Serializable{
                 this.obras = loadedData.obras;
                 this.socios = loadedData.socios;
                 this.emprestimos = loadedData.emprestimos;
+                this.reservas = loadedData.reservas;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 // Initialize with default values if loading fails
@@ -71,6 +73,8 @@ public class AppData implements Serializable{
         anualidade = 0;
         obras = new LinkedList<>();
         socios = new HashMap<>();
+        emprestimos = new LinkedList<>();
+        reservas = new LinkedList<>();
     }
 
 
@@ -309,6 +313,46 @@ public class AppData implements Serializable{
             return 1;
         }
         obras.remove(obra);
+        return 0;
+    }
+
+    public HashMap<Integer, Socio> getSocios() {
+        return new HashMap<>(socios);
+    }
+
+    public void adicionarEmprestimo(Exemplar exemplarRequisitar, String numSocio) {
+
+        int numdiasEmprestimo = this.duracaoEmprestimo;
+
+        Socio socio = socios.get(Integer.parseInt(numSocio));
+
+        Emprestimo emprestimonovo = new Emprestimo(exemplarRequisitar, socio, numdiasEmprestimo);
+        exemplarRequisitar.setDisponivel(false);
+        emprestimos.add(emprestimonovo);
+
+    }
+
+    public void adicionarReserva(Obra obra, String numSocio) {
+        if(this.reservas == null){
+            this.reservas = new LinkedList<Reserva>();
+        }
+
+        Socio socio = socios.get(Integer.parseInt(numSocio));
+        Reserva reserva = new Reserva(obra, socio);
+        System.out.println(reservas);
+
+        reservas.add(reserva);
+    }
+
+    public int realizarDevolucao(Emprestimo emprestimo) {
+        if(emprestimo.getDataDevolucaoEfetiva() != null){
+            return -1;
+        }
+        int devolverIndex =emprestimos.indexOf(emprestimo);
+        if(devolverIndex < 0){
+            return 1;
+        }
+        emprestimos.get(devolverIndex).realizarDevolucao(multaDiaria);
         return 0;
     }
 }

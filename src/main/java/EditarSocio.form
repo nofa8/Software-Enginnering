@@ -48,6 +48,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Nº Sócio"/>
                         </properties>
                       </component>
@@ -74,6 +75,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Código Postal"/>
                         </properties>
                       </component>
@@ -102,6 +104,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Email"/>
                         </properties>
                       </component>
@@ -130,6 +133,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Nº Requisições"/>
                         </properties>
                       </component>
@@ -156,6 +160,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Distrito"/>
                         </properties>
                       </component>
@@ -180,6 +185,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Data Inscrição"/>
                         </properties>
                       </component>
@@ -206,6 +212,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="NIF/CC"/>
                         </properties>
                       </component>
@@ -234,6 +241,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Cidade"/>
                         </properties>
                       </component>
@@ -260,6 +268,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Morada"/>
                         </properties>
                       </component>
@@ -286,6 +295,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Telefone"/>
                         </properties>
                       </component>
@@ -314,6 +324,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Próxima Anualidade"/>
                         </properties>
                       </component>
@@ -340,6 +351,7 @@
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <font size="16" style="1"/>
                           <text value="Estado"/>
                         </properties>
                       </component>

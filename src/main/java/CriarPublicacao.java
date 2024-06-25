@@ -190,8 +190,9 @@ public class CriarPublicacao extends JFrame{
                 }
                 JOptionPane.showMessageDialog(null,
                         "Obra criada com sucesso!\n");
-                PublicacoesPage.showPubPage();
                 me.dispose();
+                PublicacoesPage.showPubPage();
+
             }
         });
     }

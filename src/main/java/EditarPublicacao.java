@@ -4,14 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class CriarPublicacao extends JFrame{
-    private static CriarPublicacao me;
+public class EditarPublicacao extends JFrame{
+    private static EditarPublicacao me;
     private JPanel mainPanel;
     private JButton voltarButton;
-    private JButton criarButton;
+    private JButton editarButton;
     private JLabel quantidade;
     private JTextField nedicao;
     private JTextField isbn;
@@ -27,8 +29,9 @@ public class CriarPublicacao extends JFrame{
     private JTextField tituloTextField;
     private int width;
     private int height;
-    public CriarPublicacao() {
-        super("Criar Publicação");
+    private Obra antiga;
+    public EditarPublicacao(Obra obra) {
+        super("Editar Publicação");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -56,10 +59,12 @@ public class CriarPublicacao extends JFrame{
                 .forEach(gene -> estante.addItem(gene));
         EnumSet.allOf(Prateleiras.class)
                 .forEach(gene -> prateleira.addItem(gene));
-//        distribuidor = new JComboBox(Distribuidor.values());
-//        sala = new JComboBox(Salas.values());
-//        estante = new JComboBox(Estantes.values());
-//        prateleira = new JComboBox(Prateleiras.values());
+
+        antiga = obra;
+
+        atualizarObra(obra);
+
+
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +72,7 @@ public class CriarPublicacao extends JFrame{
                 me.dispose();
             }
         });
-        criarButton.addActionListener(new ActionListener() {
+        editarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -113,13 +118,13 @@ public class CriarPublicacao extends JFrame{
                 String est;
                 String pra ;
                 try{
-                     gen = Objects.requireNonNull(genero.getSelectedItem()).toString();
-                     subgen = Objects.requireNonNull(subgenero.getSelectedItem()).toString();
-                     edi = Objects.requireNonNull(editora.getSelectedItem()).toString();
-                     dis = Objects.requireNonNull(distribuidor.getSelectedItem()).toString();
-                     sal = Objects.requireNonNull(sala.getSelectedItem()).toString();
-                     est = Objects.requireNonNull(estante.getSelectedItem()).toString();
-                     pra = Objects.requireNonNull(prateleira.getSelectedItem()).toString();
+                    gen = Objects.requireNonNull(genero.getSelectedItem()).toString();
+                    subgen = Objects.requireNonNull(subgenero.getSelectedItem()).toString();
+                    edi = Objects.requireNonNull(editora.getSelectedItem()).toString();
+                    dis = Objects.requireNonNull(distribuidor.getSelectedItem()).toString();
+                    sal = Objects.requireNonNull(sala.getSelectedItem()).toString();
+                    est = Objects.requireNonNull(estante.getSelectedItem()).toString();
+                    pra = Objects.requireNonNull(prateleira.getSelectedItem()).toString();
 
                 }catch (NullPointerException exception){
                     JOptionPane.showMessageDialog(me,
@@ -179,27 +184,36 @@ public class CriarPublicacao extends JFrame{
                 }
 
                 Obra obra = new Obra(tit,listaut, gener,subgener, edit,numEdicao,anoo,is,estan,prat,salars,distribuidor);
-                int answer = AppData.getInstance().adicionarObra(obra);
-                if(answer == -1){
-                    JOptionPane.showMessageDialog(null,
-                            "Erro ao criar a Obra!\n");
-                    return;
-                } else if (answer == 1) {
-                    JOptionPane.showMessageDialog(null,
-                            "A Obra já existe!\n");
-                    return;
-                }
+                AppData.getInstance().editarObra(obra,antiga);
                 JOptionPane.showMessageDialog(null,
-                        "Obra criada com sucesso!\n");
-                PublicacoesPage.showPubPage();
+                        "Obra editada com sucesso!\n");
+                VisualizarPublicacao.showVisPubPage(obra);
                 me.dispose();
             }
         });
     }
 
-    public static void showCriarPubPage() {
+    private void atualizarObra(Obra obra) {
+        // Atualizar os campos do formulário com os dados da obra
+        nedicao.setText(Integer.toString(obra.getNumeroEdicao()));
+        tituloTextField.setText(obra.getTitulo());
+        isbn.setText(obra.getISBN());
+        autor.setText(obra.getAutores().toString());
+        ano.setText(String.valueOf(obra.getAno()));
+        quantidade.setText(String.valueOf(obra.getQuantidade()));
+        // Set initial values for combo boxes
+        editora.setSelectedItem(obra.getEditora());
+        distribuidor.setSelectedItem(obra.getDistribuidor());
+        genero.setSelectedItem(obra.getGenero());
+        subgenero.setSelectedItem(obra.getSubgenero());
+        sala.setSelectedItem(obra.getSala());
+        estante.setSelectedItem(obra.getEstante());
+        prateleira.setSelectedItem(obra.getPrateleira());
+    }
+
+    public static void showCriarPubPage(Obra obra) {
         if (me == null) {
-            me = new CriarPublicacao();
+            me = new EditarPublicacao(obra);
         }
         if (!me.isVisible()) {
             me.setVisible(true);

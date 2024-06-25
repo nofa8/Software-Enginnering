@@ -1,15 +1,17 @@
+import Modelos.Exemplar;
 import Modelos.Obra;
 
 import javax.swing.*;
+import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VisualizarPublicacao extends JFrame{
-    private static VisualizarPublicacao me;
+public class AdicionarExemplar extends JFrame{
+    private static AdicionarExemplar me;
     private JPanel mainPanel;
     private JButton voltarButton;
-    private JButton editarButton;
+    private JButton criarButton;
     private JLabel edicao;
     private JLabel isbn;
     private JLabel editora;
@@ -21,16 +23,17 @@ public class VisualizarPublicacao extends JFrame{
     private JLabel sala;
     private JLabel estante;
     private JLabel prateleira;
-    private JLabel quantidade;
+    private JTextField codigoExemplar;
     private JLabel titulo;
     private int width;
     private int height;
-    public VisualizarPublicacao(Obra obra) {
-        super("Visualizar Obra");
+    private Obra obra;
+    public AdicionarExemplar(Obra obraUtilizacao) {
+        super("Adicionar Exemplar");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
-
+        obra = obraUtilizacao;
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();
         width = (int)(size.getWidth()/2);
         height = (int)(size.getHeight()/2);
@@ -43,16 +46,38 @@ public class VisualizarPublicacao extends JFrame{
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                me.show(false);
                 PublicacoesPage.showPubPage();
                 me.dispose();
             }
         });
-        editarButton.addActionListener(new ActionListener() {
+
+        criarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                me.show(false);
-                EditarPublicacao.showCriarPubPage(obra);
+                if (codigoExemplar.getText() == null){
+                    JOptionPane.showMessageDialog(me,
+                            "Por favor, preencha o código desejado para o exemplar.",
+                            "Código Exemplar",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+                if (obra == null){
+                    JOptionPane.showMessageDialog(me,
+                            "Não há nenhuma obra a ser referenciada.",
+                            "Erro Obra",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+                Exemplar exemplar = new Exemplar(
+                        (codigoExemplar.getText()),
+                        obra
+                );
+                AppData.getInstance().guardarExemplar(exemplar);
+
+                JOptionPane.showMessageDialog(me,
+                        "Exemplar criado com sucesso!",
+                        "Exemplar Criado",
+                        JOptionPane.INFORMATION_MESSAGE);
+                PublicacoesPage.showPubPage();
+                me.dispose();
             }
         });
     }
@@ -70,16 +95,17 @@ public class VisualizarPublicacao extends JFrame{
         me.sala.setText(obra.getSala().toString());
         me.estante.setText(String.valueOf(obra.getEstante().toString()));
         me.prateleira.setText(String.valueOf(obra.getPrateleira().toString()));
-        me.quantidade.setText(String.valueOf(obra.getQuantidade()));
     }
-    public static void showVisPubPage(Obra obra) {
+    public static void showAddExemplarPage(Obra obra) {
         if (me == null) {
-            me = new VisualizarPublicacao(obra);
+            me = new AdicionarExemplar(obra);
         }
         if (!me.isVisible()) {
+            me.obra = obra;
             atualizarObra(obra);
             me.setVisible(true);
         } else {
+            me.obra = obra;
             atualizarObra(obra);
             me.toFront();
         }

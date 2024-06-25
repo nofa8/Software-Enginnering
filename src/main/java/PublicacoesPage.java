@@ -1,18 +1,15 @@
 import Modelos.*;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.text.SimpleDateFormat;
+import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import java.util.EnumSet;
 import java.util.LinkedList;
+
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.util.List;
 
 public class PublicacoesPage extends JFrame{
     private static PublicacoesPage mainFrame;
@@ -32,13 +29,12 @@ public class PublicacoesPage extends JFrame{
     private JTextField autorTxt;
     private JButton pesquisarButton;
     private JList list1;
+    private JComboBox exemplares;
     private int width;
     private int height;
-    private List<Obra> obrasList; // List to store Obra instances
+    private static LinkedList<Obra> obras = null;
 
-
-
-    private DefaultListModel<String> listModel;//apagar
+    private DefaultListModel<String> listModel;
 
 
     public PublicacoesPage() {
@@ -53,23 +49,26 @@ public class PublicacoesPage extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
-        obrasList = new ArrayList<>();
-
-
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
                 atualizarObras();
             }
         });
+        generoDrop.addItem(null);
+        EnumSet.allOf(Genero.class)
+                .forEach(gene -> generoDrop.addItem(gene));
+        subgeneroDrop.addItem(null);
+        EnumSet.allOf(Subgenero.class)
+                .forEach(gene -> subgeneroDrop.addItem(gene));
+        EnumSet.allOf(Editora.class);
 
-        obrasList = new ArrayList<>();
 
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 EmprestimosPage.showReqPage();
+
             }
         });
         sociosButton.addActionListener(new ActionListener() {
@@ -90,167 +89,184 @@ public class PublicacoesPage extends JFrame{
                 ConfiguracoesPage.showConfPage();
             }
         });
+        list1.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int index = list1.getSelectedIndex();
+                    if (index != -1) {
+                        adicionarExButton.setEnabled(true);
+                        visualizarButton.setEnabled(true);
+                        eliminarButton.setEnabled(true);
 
-
-
+                        List<Exemplar> exemplares1 = AppData.getInstance().getExemplares(obras.get(index));
+                        if (!exemplares1.isEmpty()) {
+                            exemplares.removeAllItems();
+                            for (Exemplar ex : exemplares1) {
+                                exemplares.addItem(ex.getCodigo());
+                            }
+                        }else{
+                            exemplares.removeAllItems();
+                        }
+                    } else {
+                        adicionarExButton.setEnabled(false);
+                        visualizarButton.setEnabled(false);
+                        eliminarButton.setEnabled(false);
+                        exemplares.removeAllItems();
+                    }
+                }
+            }
+        });
 
         criarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<String> autores = Arrays.asList("Joel", "Ellie");
-                Obra obra = new Obra(
-                        "Título da Obra",
-                        autores,
-                        Genero.ROMANCE,
-                        Subgenero.ARTE_MODERNA,
-                        Editora.CAMBRIDGE_UNIVERSITY_PRESS,
-                        45641,
-                        2023,
-                        "123-4567890123",
-                        Estantes.ESTANTE_1A,
-                        Prateleiras.PRATELEIRA_1,
-                        Salas.SALA_101,
-                        Distribuidor.BERTRAND
-                );
+                CriarPublicacao.showCriarPubPage();
+            }
+        });
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String dataFormatada = dateFormat.format(new Date());
+        visualizarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get the selected index from the JList
+                int selectedIndex = list1.getSelectedIndex();
 
-                // Adicionando os detalhes da obra à JList
-                String detalhesObra = obra.getNumeroEdicao() +
-                        " | " + obra.getTitulo() +
-                        " | " + dataFormatada;
-                String detalhesObra2 = obra2.getNumeroEdicao() +
-                        " | " + obra2.getTitulo() +
-                        " | " + dataFormatada;
-
-                listModel = new DefaultListModel<>();
-                list1.setModel(listModel);
+                if (selectedIndex != -1) { // Check if any item is selected
+                    // Get the selected item (details of obra) from the DefaultListModel
+                    Obra obra = obras.get(selectedIndex);
+                    if (obra == null){
 
 
-                String msg;
-                switch (AppData.getInstance().adicionarObra(obra)) {
-                    case 0:
-                        msg = "Obra adicionada com sucesso.";
-                        obrasList.add(obra);
-                        listModel.addElement(detalhesObra);
-                        break;
-                    case -1:
-                        msg = "Erro: Obra está vazia.";
-                        break;
-                    case -2:
-                        msg = "Erro: Número de edição já existe.";
-                        break;
-                    default:
-                        msg = "Erro desconhecido.";
-                }
-                JOptionPane.showMessageDialog(PublicacoesPage.this, msg );
-
-                AppData.getInstance().adicionarObra(obra2);
-
-
-                obrasList.add(obra2);
-                listModel.addElement(detalhesObra2);
-
-
-
-                visualizarButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Get the selected index from the JList
-                        int selectedIndex = list1.getSelectedIndex();
-
-                        if (selectedIndex != -1) { // Check if any item is selected
-                            // Get the selected item (details of obra) from the DefaultListModel
-                            Obra obra = obras.get(selectedIndex);
-                            if (obra == null){
-
-
-                                return;
-                            }
-                            new VisualizarPublicacao(obra);
-
-                        } else {
-                            // If no item is selected, show an error message
-                            JOptionPane.showMessageDialog(PublicacoesPage.this,
-                                    "Por favor, selecione uma obra para visualizar a estante.",
-                                    "Nenhuma Obra Selecionada",
-                                    JOptionPane.WARNING_MESSAGE);
-                        }
+                        return;
                     }
-                });
+                    new VisualizarPublicacao(obra);
 
+                } else {
+                    // If no item is selected, show an error message
+                    JOptionPane.showMessageDialog(PublicacoesPage.this,
+                            "Por favor, selecione uma obra para visualizar a estante.",
+                            "Nenhuma Obra Selecionada",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
 
         pesquisarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (topRequisitadosRadioButton.isSelected()){
-
+                String autor = null;
+                if (!autorTxt.getText().isEmpty()){
+                    autor = autorTxt.getText();
                 }
-                if (generoDrop.getSelectedItem() != null){
+                obras = AppData.getInstance().
+                        filtrarObras(autor,
+                                (Subgenero) subgeneroDrop.getSelectedItem(),
+                                (Genero) generoDrop.getSelectedItem(),
+                                topRequisitadosRadioButton.isSelected());
+                atualizar();
+            }
+        });
+        atualizar();
 
-                }
-                if (subgeneroDrop.getSelectedItem() != null){
+        adicionarExButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = list1.getSelectedIndex();
 
-                }
-                if (autorTxt.getText() != null){
+                if (selectedIndex != -1) { // Check if any item is selected
+                    // Get the selected item (details of obra) from the DefaultListModel
+                    Obra obra = obras.get(selectedIndex);
+                    if (obra == null){
 
+
+                        return;
+                    }
+
+                    new AdicionarExemplar(obra);
+
+                } else {
+                    // If no item is selected, show an error message
+                    JOptionPane.showMessageDialog(PublicacoesPage.this,
+                            "Por favor, selecione uma obra para criar um exemplar.",
+                            "Nenhuma Obra Selecionada",
+                            JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
-                atualizar();
-            }
-            private static void atualizarObras(){
-                obras = AppData.getInstance().getObras();
-                SwingUtilities.invokeLater(() -> {
-                    if (mainFrame != null) {
-                        mainFrame.atualizar();
+        eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = list1.getSelectedIndex();
+
+                if (selectedIndex != -1) { // Check if any item is selected
+                    // Get the selected item (details of obra) from the DefaultListModel
+                    Obra obra = obras.get(selectedIndex);
+                    if (obra == null){
+                        return;
                     }
-                });
-            }
-            private void atualizar(){
-                listModel = new DefaultListModel<>();
-                list1.setModel(listModel);
-//        listModel.addElement("\tNºEdição\t\tObra\t\tAno");
-                if (obras == null){
-                    return;
-                }
-                for(Obra obra : obras){
-                    listModel.addElement(formatar(obra));
-                }
 
-            }
 
-            private String formatar(Obra obra){
-                String detalhesObra = "";
-                int value = Math.min(34,Integer.toString(obra.getNumeroEdicao()).length());
-                for (int i = 0; i < 35- value; i++){
-                    detalhesObra += " ";
-                }
-                detalhesObra += obra.getNumeroEdicao() + "   ";
-                value = Math.min(64,obra.getTitulo().length());
-                for (int i = 0; i < 65- value; i++){
-                    detalhesObra += " ";
-                }
-                detalhesObra += obra.getTitulo()+"   ";
-                value = Math.min(64,Integer.toString(obra.getAno()).length());
-                for (int i = 0; i < 65- value; i++){
-                    detalhesObra += " ";
-                }
-                detalhesObra += obra.getAno();
-                return detalhesObra;
-            }
 
-            public static void showPubPage() {
-                if (mainFrame == null) {
-                    mainFrame = new PublicacoesPage();
-                }
-                if (!mainFrame.isVisible()) {
-                    atualizarObras();
-                    mainFrame.setVisible(true);
                 } else {
-                    atualizarObras();
-                    mainFrame.toFront();
+                    // If no item is selected, show an error message
+                    JOptionPane.showMessageDialog(PublicacoesPage.this,
+                            "Por favor, selecione uma exemplar para eliminar .",
+                            "Nenhuma Obra Selecionada",
+                            JOptionPane.WARNING_MESSAGE);
                 }
             }
+        });
+    }
+    private static void atualizarObras(){
+        obras = AppData.getInstance().getObras();
+        SwingUtilities.invokeLater(() -> {
+            if (mainFrame != null) {
+                mainFrame.atualizar();
+            }
+        });
+    }
+    private void atualizar(){
+        listModel = new DefaultListModel<>();
+        list1.setModel(listModel);
+        if (obras == null){
+            return;
         }
+        for(Obra obra : obras){
+            listModel.addElement(formatar(obra));
+        }
+
+    }
+
+    private String formatar(Obra obra){
+        String detalhesObra = "";
+        int value = Math.min(34,Integer.toString(obra.getNumeroEdicao()).length());
+        for (int i = 0; i < 35- value; i++){
+            detalhesObra += " ";
+        }
+        detalhesObra += obra.getNumeroEdicao() + "   ";
+        value = Math.min(64,obra.getTitulo().length());
+        for (int i = 0; i < 65- value; i++){
+            detalhesObra += " ";
+        }
+        detalhesObra += obra.getTitulo()+"   ";
+        value = Math.min(64,Integer.toString(obra.getAno()).length());
+        for (int i = 0; i < 65- value; i++){
+            detalhesObra += " ";
+        }
+        detalhesObra += obra.getAno();
+        return detalhesObra;
+    }
+
+    public static void showPubPage() {
+        if (mainFrame == null) {
+            mainFrame = new PublicacoesPage();
+        }
+        if (!mainFrame.isVisible()) {
+            atualizarObras();
+            mainFrame.setVisible(true);
+        } else {
+            atualizarObras();
+            mainFrame.toFront();
+        }
+    }
+}

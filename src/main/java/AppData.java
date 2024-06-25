@@ -55,6 +55,7 @@ public class AppData implements Serializable{
                 this.obras = loadedData.obras;
                 this.socios = loadedData.socios;
                 this.emprestimos = loadedData.emprestimos;
+                this.reservas = loadedData.reservas;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 // Initialize with default values if loading fails
@@ -72,6 +73,8 @@ public class AppData implements Serializable{
         anualidade = 0;
         obras = new LinkedList<>();
         socios = new HashMap<>();
+        emprestimos = new LinkedList<>();
+        reservas = new LinkedList<>();
     }
 
 
@@ -300,9 +303,6 @@ public class AppData implements Serializable{
         return 0;
     }
 
-    public HashMap<Integer, Socio> getSocios() {
-        return new HashMap<>(socios);
-    }
 
     public void adicionarEmprestimo(Exemplar exemplarRequisitar, String numSocio) {
 

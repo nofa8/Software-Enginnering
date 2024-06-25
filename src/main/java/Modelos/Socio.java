@@ -12,6 +12,7 @@ public class Socio implements Serializable {
     private String telefone;
     private String email;
     private LocalDate dataUltimaPagamentoAnuidade;
+    private LocalDate dataInscricao;
     private boolean anuidadeEmDia;
     private ArrayList<Emprestimo> emprestimosAtuais;
     private float valorEmDivida;
@@ -29,7 +30,8 @@ public class Socio implements Serializable {
         this.morada = morada;
         this.telefone = telefone;
         this.email = email;
-        this.dataUltimaPagamentoAnuidade = LocalDate.now();
+        this.dataUltimaPagamentoAnuidade = LocalDate.now().plusYears(1);
+        this.dataInscricao = LocalDate.now();
         this.anuidadeEmDia = true;
         this.emprestimosAtuais = new ArrayList<>();
         this.valorEmDivida = 0.0f;

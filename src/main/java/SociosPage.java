@@ -58,6 +58,16 @@ public class SociosPage extends JFrame{
                 ConfiguracoesPage.showConfPage();
             }
         });
+
+
+
+        criarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CriarSocio.showCriarSocPage();
+            }
+        });
+
     }
     public static void showSocPage() {
         if (mainFrame == null) {

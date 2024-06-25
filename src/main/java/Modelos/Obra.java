@@ -167,5 +167,24 @@ public class Obra implements Serializable {
                 ", numeroDeExemplares=" + exemplares.size() +
                 '}';
     }
+
+    public void editar(Obra nova) {
+        numeroEdicao = nova.numeroEdicao != 0 ? nova.numeroEdicao: numeroEdicao;
+        titulo = nova.titulo != null ? nova.titulo : titulo;
+        autores = nova.autores != null ? nova.autores : autores;
+        genero = nova.genero  != null ? nova.genero : genero;
+        subgenero = nova.subgenero != null ? nova.subgenero: subgenero;
+        editora = nova.editora  != null ? nova.editora : editora;
+        ano = nova.ano  != 0 ? nova.ano : ano;
+        ISBN = nova.ISBN != null ? nova.ISBN: ISBN;
+        estante = nova.estante  != null ? nova.estante: estante;
+        prateleira = nova.prateleira  != null ? nova.prateleira: prateleira;
+        sala = nova.sala   != null ? nova.sala: sala;
+        distribuidor = nova.distribuidor != null ? nova.distribuidor: distribuidor;
+    }
+
+    public boolean hasAutor(String autor) {
+        return autores.contains(autor);
+    }
 }
 

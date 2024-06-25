@@ -1,17 +1,15 @@
 import Modelos.*;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.util.List;
 
 public class PublicacoesPage extends JFrame{
     private static PublicacoesPage mainFrame;
@@ -31,6 +29,7 @@ public class PublicacoesPage extends JFrame{
     private JTextField autorTxt;
     private JButton pesquisarButton;
     private JList list1;
+    private JComboBox exemplares;
     private int width;
     private int height;
     private static LinkedList<Obra> obras = null;
@@ -56,6 +55,14 @@ public class PublicacoesPage extends JFrame{
                 atualizarObras();
             }
         });
+        generoDrop.addItem(null);
+        EnumSet.allOf(Genero.class)
+                .forEach(gene -> generoDrop.addItem(gene));
+        subgeneroDrop.addItem(null);
+        EnumSet.allOf(Subgenero.class)
+                .forEach(gene -> subgeneroDrop.addItem(gene));
+        EnumSet.allOf(Editora.class);
+
 
         requisicoesButton.addActionListener(new ActionListener() {
             @Override
@@ -82,9 +89,34 @@ public class PublicacoesPage extends JFrame{
                 ConfiguracoesPage.showConfPage();
             }
         });
+        list1.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int index = list1.getSelectedIndex();
+                    if (index != -1) {
+                        adicionarExButton.setEnabled(true);
+                        visualizarButton.setEnabled(true);
+                        eliminarButton.setEnabled(true);
 
-
-
+                        List<Exemplar> exemplares1 = AppData.getInstance().getExemplares(obras.get(index));
+                        if (!exemplares1.isEmpty()) {
+                            exemplares.removeAllItems();
+                            for (Exemplar ex : exemplares1) {
+                                exemplares.addItem(ex.getCodigo());
+                            }
+                        }else{
+                            exemplares.removeAllItems();
+                        }
+                    } else {
+                        adicionarExButton.setEnabled(false);
+                        visualizarButton.setEnabled(false);
+                        eliminarButton.setEnabled(false);
+                        exemplares.removeAllItems();
+                    }
+                }
+            }
+        });
 
         criarButton.addActionListener(new ActionListener() {
             @Override
@@ -119,25 +151,71 @@ public class PublicacoesPage extends JFrame{
             }
         });
 
-
         pesquisarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (topRequisitadosRadioButton.isSelected()){
-
+                String autor = null;
+                if (!autorTxt.getText().isEmpty()){
+                    autor = autorTxt.getText();
                 }
-                if (generoDrop.getSelectedItem() != null){
-
-                }
-                if (subgeneroDrop.getSelectedItem() != null){
-
-                }
-                if (autorTxt.getText() != null){
-
-                }
+                obras = AppData.getInstance().
+                        filtrarObras(autor,
+                                (Subgenero) subgeneroDrop.getSelectedItem(),
+                                (Genero) generoDrop.getSelectedItem(),
+                                topRequisitadosRadioButton.isSelected());
+                atualizar();
             }
         });
         atualizar();
+
+        adicionarExButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = list1.getSelectedIndex();
+
+                if (selectedIndex != -1) { // Check if any item is selected
+                    // Get the selected item (details of obra) from the DefaultListModel
+                    Obra obra = obras.get(selectedIndex);
+                    if (obra == null){
+
+
+                        return;
+                    }
+
+                    new AdicionarExemplar(obra);
+
+                } else {
+                    // If no item is selected, show an error message
+                    JOptionPane.showMessageDialog(PublicacoesPage.this,
+                            "Por favor, selecione uma obra para criar um exemplar.",
+                            "Nenhuma Obra Selecionada",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = list1.getSelectedIndex();
+
+                if (selectedIndex != -1) { // Check if any item is selected
+                    // Get the selected item (details of obra) from the DefaultListModel
+                    Obra obra = obras.get(selectedIndex);
+                    if (obra == null){
+                        return;
+                    }
+
+
+
+                } else {
+                    // If no item is selected, show an error message
+                    JOptionPane.showMessageDialog(PublicacoesPage.this,
+                            "Por favor, selecione uma exemplar para eliminar .",
+                            "Nenhuma Obra Selecionada",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
     }
     private static void atualizarObras(){
         obras = AppData.getInstance().getObras();

@@ -1,10 +1,7 @@
 import Modelos.*;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class AppData implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -131,11 +128,15 @@ public class AppData implements Serializable{
         socio.pagarDivida(socio.getValorEmDivida());
     }
 
-    public void adicionarObra(Obra obra) {
+    public int adicionarObra(Obra obra) {
         if (obra == null) {
-            return;
+            return -1;
+        }
+        if (obras.contains(obra)){
+            return 1;
         }
         obras.add(obra);
+        return 0;
     }
 
     public LinkedList<Reserva> getReservas() {
@@ -145,5 +146,90 @@ public class AppData implements Serializable{
 
         return reservas;
 
+    }
+
+    public int editarObra(Obra nova, Obra antiga) {
+        if (nova == null || antiga == null) {
+            return -1;
+        }
+        if (!obras.contains(antiga)) {
+            return 1;
+        }
+        obras.get(obras.indexOf(antiga)).editar(nova);
+        return 0;
+    }
+
+    public LinkedList<Obra> filtrarObras(String autor, Subgenero subgenero, Genero genero, boolean top) {
+        LinkedList<Obra> topRequisitados = top ? (getTopRequisitados().isEmpty() ? obras: getTopRequisitados()): obras;
+
+        if (autor !=null && genero != null && subgenero != null){
+            return new LinkedList<>(topRequisitados.stream()
+                    .filter(obra -> obra.hasAutor(autor))
+                    .filter(obra -> obra.getSubgenero() == subgenero)
+                    .filter(obra -> obra.getGenero() == genero)
+                    .toList());
+        }
+        if (autor !=null && genero != null){
+            return new LinkedList<>(topRequisitados.stream()
+                    .filter(obra -> obra.hasAutor(autor))
+                    .filter(obra -> obra.getGenero() == genero)
+                    .toList());
+        }
+        if(autor !=null && subgenero != null){
+            return new LinkedList<>(topRequisitados.stream()
+                    .filter(obra -> obra.hasAutor(autor))
+                    .filter(obra -> obra.getSubgenero() == subgenero)
+                    .toList());
+        }
+        if (genero != null && subgenero!=null){
+            return new LinkedList<>(topRequisitados.stream()
+                    .filter(obra -> obra.getGenero() == genero)
+                    .filter(obra -> obra.getSubgenero() == subgenero)
+                    .toList());
+        }
+        if (autor != null){
+            return new LinkedList<>(topRequisitados.stream()
+                    .filter(obra -> obra.hasAutor(autor))
+                    .toList());
+        }
+        if (genero != null){
+            return new LinkedList<>(topRequisitados.stream()
+                    .filter(obra -> obra.getGenero() == genero)
+                    .toList());
+        }
+        if (subgenero != null){
+            return new LinkedList<>(topRequisitados.stream()
+                    .filter(obra -> obra.getSubgenero() == subgenero)
+                    .toList());
+        }
+        return topRequisitados;
+    }
+
+    public LinkedList<Obra> getTopRequisitados() {
+        Map<Obra, Integer> requestCountMap = new HashMap<>();
+
+        for (Emprestimo emprestimo : emprestimos) {
+            Obra obra = emprestimo.getExemplar().getObra();
+            requestCountMap.put(obra, requestCountMap.getOrDefault(obra, 0) + 1);
+        }
+
+        List<Map.Entry<Obra, Integer>> sortedEntries = new LinkedList<>(requestCountMap.entrySet());
+
+        sortedEntries.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+
+        LinkedList<Obra> topRequisitados = new LinkedList<>();
+        for (Map.Entry<Obra, Integer> entry : sortedEntries) {
+            topRequisitados.add(entry.getKey());
+        }
+
+        return topRequisitados;
+    }
+
+    public List<Exemplar> getExemplares(Obra obra) {
+        return obra.getExemplares() ;
+    }
+
+    public void guardarExemplar(Exemplar exemplar) {
+        obras.get(obras.indexOf(exemplar.getObra())).adicionarExemplar(exemplar);
     }
 }

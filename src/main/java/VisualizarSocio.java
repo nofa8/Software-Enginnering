@@ -1,9 +1,12 @@
+import Modelos.Socio;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VisualizarSocio extends JFrame{
+    private static VisualizarSocio me;
     private JPanel mainPanel;
     private JButton requisicoesButton;
     private JButton publicacoesButton;
@@ -27,7 +30,7 @@ public class VisualizarSocio extends JFrame{
     private JButton pagamentosButton;
     private int width;
     private int height;
-    public VisualizarSocio() {
+    public VisualizarSocio(Socio socio) {
         super("Visualizar Sócio");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,31 +43,19 @@ public class VisualizarSocio extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        requisicoesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                EmprestimosPage.showReqPage();
+        me = this;
+        atualizarSocio(socio);
 
-            }
-        });
-        publicacoesButton.addActionListener(new ActionListener() {
+        voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PublicacoesPage.showPubPage();
+                me.show(false);
+                SociosPage.showSocPage();
+                me.dispose();
             }
         });
-        paginaPrincipalButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Casa.showCasaPage();
-            }
-        });
-        definicoesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ConfiguracoesPage.showConfPage();
-            }
-        });
+
+
     }
 
 }

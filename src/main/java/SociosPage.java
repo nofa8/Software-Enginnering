@@ -115,7 +115,7 @@ public class SociosPage extends JFrame{
     private void atualizar(){
         listModel = new DefaultListModel<>();
         list1.setModel(listModel);
-        if (socios == null){
+        if (socios.isEmpty()){
             return;
         }
         for(Socio socio : socios.values()){

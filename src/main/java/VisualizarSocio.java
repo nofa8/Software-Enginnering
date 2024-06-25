@@ -44,7 +44,7 @@ public class VisualizarSocio extends JFrame{
         this.setVisible(true);
 
         me = this;
-        atualizarSocio(socio);
+        //atualizarSocio(socio);
 
         voltarButton.addActionListener(new ActionListener() {
             @Override

@@ -40,7 +40,7 @@ public class VisualizarSocio extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
+        me = this;
         atualizarSocio(socio);
 
         voltarButton.addActionListener(new ActionListener() {

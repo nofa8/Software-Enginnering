@@ -44,7 +44,7 @@ public class EditarSocio extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
+        me = this;
         EnumSet.allOf(Distrito.class)
                 .forEach(dist -> comboBoxdistrito.addItem(dist));
 

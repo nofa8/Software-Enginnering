@@ -39,7 +39,7 @@ public class VisualizarPublicacao extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
+        me=this;
         atualizarObra(obra);
         voltarButton.addActionListener(new ActionListener() {
             @Override

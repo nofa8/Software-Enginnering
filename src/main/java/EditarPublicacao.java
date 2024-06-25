@@ -44,7 +44,7 @@ public class EditarPublicacao extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
+        me=this;
         EnumSet.allOf(Genero.class)
                 .forEach(gene -> genero.addItem(gene));
 

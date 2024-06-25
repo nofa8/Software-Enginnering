@@ -54,6 +54,14 @@ public class VisualizarSocio extends JFrame{
                 me.dispose();
             }
         });
+
+        editarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                me.show(false);
+                EditarSocio.showEditarSocPage(socio);
+            }
+        });
     }
 
     private static void atualizarSocio(Socio socio) {

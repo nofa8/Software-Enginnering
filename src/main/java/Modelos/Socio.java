@@ -196,4 +196,16 @@ public class Socio implements Serializable {
                 '}';
     }
 
+    public void editar(Socio novo) {
+        nifOuCC = novo.nifOuCC != null ? novo.nifOuCC : nifOuCC;
+        morada = novo.morada != null ? novo.morada : morada;
+        distrito = novo.distrito != null ? novo.distrito : distrito;
+        cidade = novo.cidade != null ? novo.cidade : cidade;
+        codigoPostal = novo.codigoPostal != null ? novo.codigoPostal : codigoPostal;
+        telefone = novo.telefone != null ? novo.telefone : telefone;
+        email = novo.email != null ? novo.email : email;
+        nome = novo.nome != null ? novo.nome : nome;
+
+    }
+
 }

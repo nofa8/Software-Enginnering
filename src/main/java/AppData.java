@@ -117,6 +117,10 @@ public class AppData implements Serializable{
         return new LinkedList<>(obras);
     }
 
+    public HashMap<Integer, Socio> getSocios() {
+        return new HashMap<>(socios);
+    }
+
     public void pagarAnuidade(Socio socio) {
         if (socio == null) {
             return;
@@ -177,6 +181,17 @@ public class AppData implements Serializable{
             return 1;
         }
         obras.get(obras.indexOf(antiga)).editar(nova);
+        return 0;
+    }
+
+    public int editarSocio(Socio novo, Socio antigo) {
+        if (novo == null || antigo == null) {
+            return -1;
+        }
+        if (!socios.containsKey(antigo.getNumero())) {
+            return 1;
+        }
+        socios.get(antigo.getNumero()).editar(novo);
         return 0;
     }
 

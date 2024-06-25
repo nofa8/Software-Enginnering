@@ -62,7 +62,7 @@ public class EditarSocio extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (textFieldNsocio.getText() == null){
+                if (nSocio.getText() == null){
                     JOptionPane.showMessageDialog(me,
                             "Número de sócio tem que ser um preenchido!\n");
                     return;
@@ -104,7 +104,7 @@ public class EditarSocio extends JFrame{
                 }
 
 
-                String nSocio = textFieldNsocio.getText();
+                String numeroDoSocio = nSocio.getText();
                 String cidade = textFieldCidade.getText();
                 String email = textFieldEmail.getText();
                 String codPost = textFieldCodigoPostal.getText();
@@ -124,7 +124,7 @@ public class EditarSocio extends JFrame{
                 }
                 int numSocio;
                 try{
-                    numSocio = Integer.parseInt(nSocio);
+                    numSocio = Integer.parseInt(numeroDoSocio);
                 }catch (NumberFormatException exception){
                     JOptionPane.showMessageDialog(me,
                             "O numero de socio tem que ser um número inteiro positivo\n");
@@ -133,7 +133,7 @@ public class EditarSocio extends JFrame{
                 Distrito dist = Distrito.fromFormattedString(dis);
 
                 Socio novoSocio = new Socio(nom,nif,morada,dist,cidade,codPost,tele, email,numSocio);
-                AppData.getInstance().adicionarSocio(novoSocio);
+                AppData.getInstance().editarSocio(novoSocio, antigo);
                 JOptionPane.showMessageDialog(null,
                         "Socio criado com sucesso!\n");
                 me.dispose();
@@ -142,7 +142,7 @@ public class EditarSocio extends JFrame{
         });
     }
     private static void atualizarSocio(Socio socio) {
-        me.textFieldNsocio.setText(Integer.toString(socio.getNumero()));
+        me.nSocio.setText(Integer.toString(socio.getNumero()));
         me.textFieldNif.setText(socio.getNifOuCC());
         me.textFieldTel.setText(socio.getTelefone());
         me.textFieldEmail.setText(socio.getEmail());

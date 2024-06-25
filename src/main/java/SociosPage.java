@@ -93,8 +93,6 @@ public class SociosPage extends JFrame{
             }
         });
 
-
-
         criarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

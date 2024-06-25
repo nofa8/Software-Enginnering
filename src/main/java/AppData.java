@@ -341,6 +341,7 @@ public class AppData implements Serializable{
         reservas.add(reserva);
     }
 
+
     public int realizarDevolucao(Emprestimo emprestimo) {
         if(emprestimo.getDataDevolucaoEfetiva() != null){
             return -1;
@@ -351,5 +352,10 @@ public class AppData implements Serializable{
         }
         emprestimos.get(devolverIndex).realizarDevolucao(multaDiaria);
         return 0;
+    }
+
+    public HashMap<Integer, Socio> getSocios() {
+
+        return new HashMap<>(socios);
     }
 }

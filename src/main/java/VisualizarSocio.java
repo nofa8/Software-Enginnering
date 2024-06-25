@@ -4,14 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class VisualizarSocio extends JFrame{
     private static VisualizarSocio me;
     private JPanel mainPanel;
-    private JButton requisicoesButton;
-    private JButton publicacoesButton;
-    private JButton definicoesButton;
-    private JButton paginaPrincipalButton;
     private JButton voltarButton;
     private JButton editarButton;
     private JLabel nsocio;
@@ -43,7 +41,6 @@ public class VisualizarSocio extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        me = this;
         atualizarSocio(socio);
 
         voltarButton.addActionListener(new ActionListener() {
@@ -83,11 +80,15 @@ public class VisualizarSocio extends JFrame{
         pagamentosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                me.show(false);
                 Pagamentos.showPagamentosPage(socio);
             }
         });
-
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                me = null;
+            }
+        });
     }
 
     private static void atualizarSocio(Socio socio) {

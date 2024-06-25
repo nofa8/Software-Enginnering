@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
 
 public class CriarSocio extends JFrame{
@@ -27,7 +29,7 @@ public class CriarSocio extends JFrame{
     public CriarSocio() {
         super("Criar Sócio");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();
@@ -36,7 +38,6 @@ public class CriarSocio extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        me = this;
 
         EnumSet.allOf(Distrito.class)
                 .forEach(dist -> comboBoxdistrito.addItem(dist));
@@ -46,6 +47,12 @@ public class CriarSocio extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 me.show(false);
                 me.dispose();
+            }
+        });
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                me = null;
             }
         });
         criarButton.addActionListener(new ActionListener() {

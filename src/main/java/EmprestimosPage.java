@@ -55,7 +55,12 @@ public class EmprestimosPage extends JFrame{
             }
         });
 
-
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                mainFrame = null;
+            }
+        });
         publicacoesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

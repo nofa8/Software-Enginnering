@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -39,7 +41,6 @@ public class CriarPublicacao extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        me = this;
 
         EnumSet.allOf(Genero.class)
                 .forEach(gene -> genero.addItem(gene));
@@ -64,6 +65,12 @@ public class CriarPublicacao extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 me.dispose();
+            }
+        });
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                me = null;
             }
         });
         criarButton.addActionListener(new ActionListener() {

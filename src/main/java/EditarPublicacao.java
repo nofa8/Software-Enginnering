@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,7 +44,6 @@ public class EditarPublicacao extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        me = this;
 
         EnumSet.allOf(Genero.class)
                 .forEach(gene -> genero.addItem(gene));
@@ -64,7 +65,12 @@ public class EditarPublicacao extends JFrame{
 
         atualizarObra(obra);
 
-
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                me = null;
+            }
+        });
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

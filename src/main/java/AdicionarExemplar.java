@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class AdicionarExemplar extends JFrame{
     private static AdicionarExemplar me;
@@ -41,13 +43,18 @@ public class AdicionarExemplar extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        me = this;
         atualizarObra(obra);
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PublicacoesPage.showPubPage();
                 me.dispose();
+            }
+        });
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                me = null;
             }
         });
 

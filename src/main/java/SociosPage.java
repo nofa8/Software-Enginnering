@@ -38,7 +38,7 @@ public class SociosPage extends JFrame{
     public SociosPage() {
         super("Página de Sócios");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();
@@ -116,6 +116,13 @@ public class SociosPage extends JFrame{
                         visualizarButton.setEnabled(false);
                     }
                 }
+            }
+        });
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                mainFrame = null;
             }
         });
     }

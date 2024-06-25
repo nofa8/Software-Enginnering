@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
 
 public class EditarSocio extends JFrame{
@@ -33,7 +35,7 @@ public class EditarSocio extends JFrame{
     public EditarSocio(Socio socio) {
         super("Editar Sócio");
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
 
         Dimension size= Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,7 +44,6 @@ public class EditarSocio extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        me = this;
 
         EnumSet.allOf(Distrito.class)
                 .forEach(dist -> comboBoxdistrito.addItem(dist));
@@ -138,6 +139,12 @@ public class EditarSocio extends JFrame{
                         "Socio criado com sucesso!\n");
                 me.dispose();
                 SociosPage.showSocPage();
+            }
+        });
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                me = null;
             }
         });
     }

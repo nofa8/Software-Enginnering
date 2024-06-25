@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Pagamentos extends JFrame{
     private static Pagamentos me;
@@ -29,7 +31,7 @@ public class Pagamentos extends JFrame{
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        me = this;
+
         socio = novo;
         nomSocio.setText(socio.getNome());
         proximaAnualidade.setText(String.valueOf(socio.getDataProximoPagamentoAnuidade().plusYears(1)));
@@ -46,6 +48,12 @@ public class Pagamentos extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 AppData.getInstance().pagarMulta(socio);
+            }
+        });
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                me = null;
             }
         });
     }

@@ -82,7 +82,12 @@ public class CriarEmprestimo extends JFrame {
             }
         };
         listObrasEmprestimo.addListSelectionListener(listSelectionListener);
-
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                mainFrame = null;
+            }
+        });
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

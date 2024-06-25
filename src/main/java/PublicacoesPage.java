@@ -166,6 +166,12 @@ public class PublicacoesPage extends JFrame{
                 atualizar();
             }
         });
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                mainFrame = null;
+            }
+        });
         atualizar();
 
         adicionarExButton.addActionListener(new ActionListener() {

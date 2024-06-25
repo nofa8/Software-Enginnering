@@ -1,6 +1,8 @@
 import Modelos.*;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +37,7 @@ public class EmprestimosPage extends JFrame{
     private int height;
     private static LinkedList<Emprestimo> emprestimos = null;
     public EmprestimosPage() {
-        super("Empréstimos");
+        super("Página de Empréstimos");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
@@ -127,7 +129,57 @@ public class EmprestimosPage extends JFrame{
                 VisualizarEmprestimo.showReqPage(emprestimo);
             }
         });
+        listEmprestimos.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int index = listEmprestimos.getSelectedIndex();
+                    if (index != -1) {
+                        visualizarButton.setEnabled(true);
+                        devolverButton.setEnabled(true);
+                    } else {
+                        visualizarButton.setEnabled(false);
+                        devolverButton.setEnabled(false);
+                    }
+                }
+            }
+        });
+        pesquisarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String codigo = null;
+                if ( codExemplarRadioButton.isSelected() &&!codExemplar.getText().isEmpty()){
+                    codigo = codExemplar.getText();
+                }
+                int soc = 0;
+                String socio = null;
+                if ( nºSócioRadioButton.isSelected() && !numSocio.getText().isEmpty()){
+                    socio = numSocio.getText();
+                    try {
+                        soc = Integer.parseInt(socio);
+                    } catch (NumberFormatException exception) {
+                        JOptionPane.showMessageDialog(EmprestimosPage.this,
+                                "Sócio tem que ser um número inteiro!\n");
+                        return;
+                    }
+                    if (soc < 0) {
+                        JOptionPane.showMessageDialog(EmprestimosPage.this,
+                                "Sócio tem que ser um inteiro positivo!\n");
+                        return;
+                    }
+                }
+                emprestimos = AppData.getInstance().
+                        filtrarEmprestimos(codigo,
+                                soc,
+                                valorEmAtrasoRadioButton.isSelected());
+                atualizar();
+            }
+        });
+
         atualizar();
+
+
+
     }
     private static void atualizarEmprestimos(){
         emprestimos = AppData.getInstance().getEmprestimos();

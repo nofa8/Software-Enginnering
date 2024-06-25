@@ -32,7 +32,7 @@ public class CriarEmprestimo extends JFrame {
     private DefaultListModel<String> listModel;
 
     public CriarEmprestimo()  {
-        super("Empréstimos");
+        super("Criar Empréstimo");
 
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -56,7 +56,7 @@ public class CriarEmprestimo extends JFrame {
                     Obra obra = obras.get(listObrasEmprestimo.getSelectedIndex());
                     labelObraTitulo.setText(obra.getTitulo());
                     for(Exemplar exem : obra.getExemplares()){
-                        comboBoxExemplares.addItem(exem);
+                        comboBoxExemplares.addItem(exem.getCodigo());
                     }
                     labelData.setText(LocalDate.now().toString() + " - " + LocalDate.now().plusDays(AppData.getInstance().getDuracaoEmprestimo()));
                 }
@@ -112,15 +112,16 @@ public class CriarEmprestimo extends JFrame {
     }
 
 
-
     public static void showCriarEmpPage() {
 
         if (mainFrame == null) {
             mainFrame = new CriarEmprestimo();
         }
         if (!mainFrame.isVisible()) {
+            atualizarObras();
             mainFrame.setVisible(true);
         } else {
+            atualizarObras();
             mainFrame.toFront();
         }
     }

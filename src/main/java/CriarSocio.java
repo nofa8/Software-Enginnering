@@ -123,7 +123,7 @@ public class CriarSocio extends JFrame{
                     numSocio = Integer.parseInt(nSocio);
                 }catch (NumberFormatException exception){
                     JOptionPane.showMessageDialog(me,
-                            "O numero de socio tem que ser um número inteiro positivo\n");
+                            "O número de socio tem que ser um número inteiro positivo\n");
                     return;
                 }
                 Distrito dist = Distrito.fromFormattedString(dis);
@@ -131,7 +131,7 @@ public class CriarSocio extends JFrame{
                 Socio novoSocio = new Socio(nom,nif,morada,tele,cidade,numSocio);
                 AppData.getInstance().adicionarSocio(novoSocio);
                 JOptionPane.showMessageDialog(null,
-                        "SOcio criada com sucesso!\n");
+                        "Sócio criado com sucesso!\n");
                 SociosPage.showSocPage();
                 me.dispose();
             }

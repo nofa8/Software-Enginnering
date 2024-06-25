@@ -38,7 +38,7 @@ public class PublicacoesPage extends JFrame{
 
 
     public PublicacoesPage() {
-        super("Bought Page");
+        super("Página de Publicações");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();

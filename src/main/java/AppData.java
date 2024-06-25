@@ -73,6 +73,7 @@ public class AppData implements Serializable{
         anualidade = 0;
         obras = new LinkedList<>();
         socios = new HashMap<>();
+        emprestimos = new LinkedList<>();
         reservas = new LinkedList<>();
     }
 

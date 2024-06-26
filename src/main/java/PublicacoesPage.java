@@ -246,7 +246,18 @@ public class PublicacoesPage extends JFrame{
                             if (confirm == JOptionPane.YES_OPTION) {
                                 AppData.getInstance().eliminarObra(obra);
                                 atualizarObras();
+                                return;
                             }
+
+                        }
+                        List<Exemplar> exemplares1 = obra.getExemplares();
+                        if (!exemplares1.isEmpty()) {
+                            exemplares.removeAllItems();
+                            for (Exemplar ex : exemplares1) {
+                                exemplares.addItem(ex.getCodigo());
+                            }
+                        }else{
+                            exemplares.removeAllItems();
                         }
                     }
 

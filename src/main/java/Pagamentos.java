@@ -35,7 +35,7 @@ public class Pagamentos extends JFrame{
 
         socio = novo;
         nomSocio.setText(socio.getNome());
-        proximaAnualidade.setText(String.valueOf(socio.getDataProximoPagamentoAnuidade().plusYears(1)));
+        proximaAnualidade.setText(String.valueOf(socio.getDataProximoPagamentoAnuidade()));
         anualidade.setText(String.valueOf(AppData.getInstance().getAnualidade()));
         multaTotal.setText(String.valueOf(socio.getValorEmDivida()));
 
@@ -96,7 +96,7 @@ public class Pagamentos extends JFrame{
     private static void atualizarSocio(Socio socio) {
         me.socio = socio;
         me.nomSocio.setText(socio.getNome());
-        me.proximaAnualidade.setText(String.valueOf(socio.getDataProximoPagamentoAnuidade().plusYears(1)));
+        me.proximaAnualidade.setText(String.valueOf(socio.getDataProximoPagamentoAnuidade()));
         me.anualidade.setText(String.valueOf(AppData.getInstance().getAnualidade()));
         me.multaTotal.setText(String.valueOf(socio.getValorEmDivida()));
     }

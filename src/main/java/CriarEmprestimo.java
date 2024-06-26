@@ -58,12 +58,12 @@ public class CriarEmprestimo extends JFrame {
                 if(listObrasEmprestimo.getSelectedIndex() != -1){
                     Obra obra = obras.get(listObrasEmprestimo.getSelectedIndex());
                     labelObraTitulo.setText(obra.getTitulo());
+                    comboBoxExemplares.removeAllItems();
                     for(Exemplar exem : obra.getExemplares()){
                         if(exem.isDisponivel()){
                             comboBoxExemplares.addItem(exem.getCodigo());
                             disponiveis++;
                         }
-
 
                     }
                     if(disponiveis == 0){
@@ -76,6 +76,8 @@ public class CriarEmprestimo extends JFrame {
                     }
                     labelData.setText(LocalDate.now().toString() + " - " + LocalDate.now().plusDays(AppData.getInstance().getDuracaoEmprestimo()));
 
+                }else{
+                    comboBoxExemplares.removeAllItems();
                 }
 
             }
@@ -112,7 +114,19 @@ public class CriarEmprestimo extends JFrame {
                     return;
                 }
 
-                AppData.getInstance().adicionarEmprestimo(exemplarRequisitar, numSocio);
+                int i = AppData.getInstance().adicionarEmprestimo(exemplarRequisitar, numSocio);
+                if (i == -1){
+                    JOptionPane.showMessageDialog(CriarEmprestimo.this,
+                            "Sócio não existe","Empréstimo não criado",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if (i == -2){
+                    JOptionPane.showMessageDialog(CriarEmprestimo.this,
+                            "Sócio não tem permissão ou possibilidade de requisitar","Empréstimo não criado",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
                 JOptionPane.showMessageDialog(CriarEmprestimo.this,
                         "Empréstimo criado com sucesso","Empréstimo criado",
                         JOptionPane.INFORMATION_MESSAGE);

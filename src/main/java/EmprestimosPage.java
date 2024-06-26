@@ -113,6 +113,10 @@ public class EmprestimosPage extends JFrame{
                             "Empréstimo não Encontrado\n");
                     return;
                 }
+                if(resposta != 0){
+                    JOptionPane.showMessageDialog(EmprestimosPage.this,
+                            "Socio nº: "+ resposta +" notificado de Empréstimo disponível!\n");
+                }
                 atualizarEmprestimos();
                 JOptionPane.showMessageDialog(EmprestimosPage.this,
                         "Devolução realizada com sucesso!\n");
@@ -211,7 +215,7 @@ public class EmprestimosPage extends JFrame{
     }
 
     private String formatar(Emprestimo emprestimo){
-        String detalhesEmprestimo = " "+ (emprestimo.getDataDevolucaoEfetiva()!= null ? "Terminado": "Ativo");
+        String detalhesEmprestimo = " "+ (emprestimo.getDataDevolucaoEfetiva()!= null ? "Terminado": "    Ativo    ");
         int valur = width/30;
         int value = Math.min(valur-1,Integer.toString(emprestimo.getSocio().getNumero()).length()+1);
         for (int i = 0; i < valur- value; i++){

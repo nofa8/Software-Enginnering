@@ -38,8 +38,17 @@ public class Obra implements Serializable {
         this.distribuidor = distribuidor;
     }
 
-    public void adicionarExemplar(Exemplar exemplar) {
+    public int adicionarExemplar(Exemplar exemplar) {
+        if (exemplares.contains(exemplar)){
+            return -1;
+        }
+        for (Exemplar ex : exemplares){
+            if (ex.getCodigo().equals(exemplar.getCodigo())){
+                return -2;
+            }
+        }
         exemplares.add(exemplar);
+        return 0;
     }
 
     // Getters and setters

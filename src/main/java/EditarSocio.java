@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class EditarSocio extends JFrame{
     private static EditarSocio me;
@@ -147,6 +148,32 @@ public class EditarSocio extends JFrame{
                 me = null;
             }
         });
+    }
+    private static void showError(JFrame frame, String message) {
+        JOptionPane.showMessageDialog(frame, message, "Error" ,JOptionPane.ERROR_MESSAGE);
+    }
+    private static boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
+    }
+    private static boolean isNullOrEmpty(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+
+    private static boolean isValidNumber(String str, int length) {
+        if (str == null || (str.length() != length && length != 0)) {
+            return false;
+        }
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private static boolean isValidNifCC(String nif) {
+        return nif.matches("[a-zA-Z0-9]+") && nif.length() >= 9;
     }
     private static void atualizarSocio(Socio socio) {
         me.nSocio.setText(Integer.toString(socio.getNumero()));

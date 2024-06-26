@@ -77,14 +77,38 @@ public class AdicionarExemplar extends JFrame{
                         (codigoExemplar.getText()),
                         obra
                 );
-                AppData.getInstance().guardarExemplar(exemplar);
+                int resposta = AppData.getInstance().guardarExemplar(exemplar);
+                if (resposta == 0){
+                    JOptionPane.showMessageDialog(me,
+                            "Exemplar criado com sucesso!",
+                            "Exemplar Criado",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    PublicacoesPage.showPubPage();
+                    me.dispose();
+                    return;
+                }
+                if (resposta == 1){
+                    JOptionPane.showMessageDialog(me,
+                            "Código já existe!",
+                            "Erro Exemplar",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (resposta == -1){
+                    JOptionPane.showMessageDialog(me,
+                            "Exemplar já existia!",
+                            "Erro Exemplar",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (resposta == -2){
+                    JOptionPane.showMessageDialog(me,
+                            "Código do exemplar já existe!",
+                            "Erro Exemplar",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-                JOptionPane.showMessageDialog(me,
-                        "Exemplar criado com sucesso!",
-                        "Exemplar Criado",
-                        JOptionPane.INFORMATION_MESSAGE);
-                PublicacoesPage.showPubPage();
-                me.dispose();
             }
         });
     }

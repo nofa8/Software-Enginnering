@@ -81,7 +81,14 @@ public class Socio implements Serializable {
     }
 
     public void pagarAnuidade() {
-        dataProximoPagamentoAnuidade = LocalDate.now().plusYears(1);
+        if (dataProximoPagamentoAnuidade.isBefore(LocalDate.now())){
+            dataProximoPagamentoAnuidade = LocalDate.now().plusYears(1);
+        }
+        else{
+            dataProximoPagamentoAnuidade = dataProximoPagamentoAnuidade.plusYears(1);
+        }
+
+
         anuidadeEmDia = true;
     }
 

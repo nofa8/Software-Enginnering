@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class CriarSocio extends JFrame{
     private static CriarSocio me;
@@ -59,45 +60,53 @@ public class CriarSocio extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (textFieldNsocio.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Número de sócio tem que ser um preenchido!\n");
+                if (isNullOrEmpty(textFieldNsocio.getText())) {
+                    showError(me, "Número de sócio tem que ser preenchido!");
                     return;
                 }
-                if (textFieldCidade.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Cidade tem que ser um preenchido!\n");
-                    return;
-                }
-                if (textFieldEmail.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Email tem que ser um preenchido!\n");
-                    return;
-                }
-                if (textFieldCodigoPostal.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Codigo Postal tem que ser um preenchido!\n");
 
+                if (!isValidNumber(textFieldNsocio.getText(), 0)) {
+                    showError(me, "O número de sócio apenas pode conter números!");
                     return;
                 }
-                if (nomeTextField.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Título tem que ser um preenchido!\n");
+                if (isNullOrEmpty(textFieldCidade.getText())) {
+                    showError(me, "Cidade tem que ser preenchida!");
                     return;
                 }
-                if (textFieldNif.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Nif tem que ser um preenchido!\n");
+                if (isNullOrEmpty(textFieldEmail.getText())) {
+                    showError(me, "Email tem que ser preenchido!");
                     return;
                 }
-                if (textFieldTel.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "O numero de telefone tem que ser um preenchido!\n");
+                if (!isValidEmail(textFieldEmail.getText())) {
+                    showError(me, "Email tem que ter um formato válido!");
                     return;
                 }
-                if (textFieldMorada.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Morada tem que ser um preenchido!\n");
+                if (isNullOrEmpty(textFieldCodigoPostal.getText())) {
+                    showError(me, "Código Postal tem que ser preenchido!");
+                    return;
+                }
+                if (isNullOrEmpty(nomeTextField.getText())) {
+                    showError(me, "Título tem que ser preenchido!");
+                    return;
+                }
+                if (isNullOrEmpty(textFieldNif.getText())) {
+                    showError(me, "NIF tem que ser preenchido!");
+                    return;
+                }
+                if (!isValidNifCC(textFieldNif.getText())) {
+                    showError(me, "NIF/CC tem que conter mais que 9 caracteres  alfanumérico !");
+                    return;
+                }
+                if (isNullOrEmpty(textFieldTel.getText())) {
+                    showError(me, "O número de telefone tem que ser preenchido!");
+                    return;
+                }
+                if (!isValidNumber(textFieldTel.getText(), 9)) {
+                    showError(me, "O número de telefone tem que conter exatamente 9 dígitos!");
+                    return;
+                }
+                if (isNullOrEmpty(textFieldMorada.getText())) {
+                    showError(me, "Morada tem que ser preenchida!");
                     return;
                 }
 
@@ -139,7 +148,32 @@ public class CriarSocio extends JFrame{
             }
         });
     }
+    private static void showError(JFrame frame, String message) {
+        JOptionPane.showMessageDialog(frame, message, "Error" ,JOptionPane.ERROR_MESSAGE);
+    }
+    private static boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
+    }
+    private static boolean isNullOrEmpty(String str) {
+        return str == null || str.trim().isEmpty();
+    }
 
+    private static boolean isValidNumber(String str, int length) {
+        if (str == null || (str.length() != length && length != 0)) {
+            return false;
+        }
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private static boolean isValidNifCC(String nif) {
+        return nif.matches("[a-zA-Z0-9]+") && nif.length() >= 9;
+    }
     private static void cleanPlaces() {
         SwingUtilities.invokeLater(() -> {
             if (me != null) {
@@ -173,10 +207,6 @@ public class CriarSocio extends JFrame{
             cleanPlaces();
             me.toFront();
         }
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }
 

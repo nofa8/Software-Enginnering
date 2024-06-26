@@ -166,6 +166,14 @@ public class AppData implements Serializable{
     }
 
     public boolean removerSocio(int numero) {
+        if (!socios.containsKey(numero)) {
+            return false;
+        }
+        Socio socio = socios.get(numero);
+        if (socio.getEmprestimosAtuais().size() > 0) {
+            return false;
+        }
+
         return socios.remove(numero) != null;
     }
 
@@ -270,12 +278,20 @@ public class AppData implements Serializable{
         return obra.getExemplares() ;
     }
 
-    public void guardarExemplar(Exemplar exemplar) {
-        obras.get(obras.indexOf(exemplar.getObra())).adicionarExemplar(exemplar);
+    public int guardarExemplar(Exemplar exemplar) {
+        for (Obra obra : obras){
+            for (Exemplar ex : obra.getExemplares()){
+                if (exemplar.getCodigo().equals(ex.getCodigo())){
+                    return 1;
+                }
+            }
+        }
+
+        return  obras.get(obras.indexOf(exemplar.getObra())).adicionarExemplar(exemplar);
     }
 
     public int eliminarExemplar(Obra obra, String codigoExemplar) {
-        if (obra == null || codigoExemplar == null) {
+        if (obra == null || codigoExemplar == null || !obras.contains(obra)) {
             return -1;
         }
 
@@ -373,19 +389,22 @@ public class AppData implements Serializable{
     }
 
 
-    public void adicionarEmprestimo(Exemplar exemplarRequisitar, String numSocio) {
+    public int  adicionarEmprestimo(Exemplar exemplarRequisitar, String numSocio) {
 
         int numdiasEmprestimo = this.duracaoEmprestimo;
 
         Socio socio = socios.get(Integer.parseInt(numSocio));
+        if (socio == null){
+            return -1;
+        }
         if (!socio.podeRequisitarLivros(limiteEmprestimosSim)){
-            return;
+            return-2;
         }
         Emprestimo emprestimonovo = new Emprestimo(exemplarRequisitar, socio, numdiasEmprestimo);
         exemplarRequisitar.setDisponivel(false);
         emprestimos.add(emprestimonovo);
         socio.adicionarEmprestimo(emprestimonovo);
-
+        return 0;
 
     }
 
@@ -395,11 +414,14 @@ public class AppData implements Serializable{
         }
 
         Socio socio = socios.get(Integer.parseInt(numSocio));
+        if (socio == null){
+            return;
+        }
         Reserva reserva = new Reserva(obra, socio);
-        System.out.println(reservas);
 
         reservas.add(reserva);
     }
+
 
 
     public int realizarDevolucao(Emprestimo emprestimo) {
@@ -411,7 +433,21 @@ public class AppData implements Serializable{
             return 1;
         }
         emprestimos.get(devolverIndex).realizarDevolucao(multaDiaria);
-        return 0;
+        Obra obra = emprestimo.getExemplar().getObra();
+        int devolver = 0;
+        for (Reserva reserva : reservas){
+            if(reserva.getObra() == obra && reserva.getSocio().podeRequisitarLivros(limiteEmprestimosSim)){
+                devolver = reserva.getSocio().getNumero();
+                eliminarReserva(reserva);
+            }
+        }
+
+        return devolver;
+    }
+
+    private void eliminarReserva(Reserva reserva) {
+
+        reservas.remove(reserva);
     }
 
     public HashMap<Integer, Socio> getSocios() {

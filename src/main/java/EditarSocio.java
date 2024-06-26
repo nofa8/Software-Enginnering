@@ -64,44 +64,52 @@ public class EditarSocio extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (nSocio.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Número de sócio tem que ser um preenchido!\n");
+                if (isNullOrEmpty(nSocio.getText())){
+                    showError(me, "Número de sócio tem que ser preenchido!");
                     return;
                 }
-                if (textFieldCidade.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Cidade tem que ser um preenchido!\n");
+                if (!isValidNumber(nSocio.getText(), 0)) {
+                    showError(me, "O número de sócio apenas pode conter números!");
                     return;
                 }
-                if (textFieldEmail.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Email tem que ser um preenchido!\n");
+                if (isNullOrEmpty(textFieldCidade.getText())){
+                    showError(me, "Cidade tem que ser preenchida!");
                     return;
                 }
-                if (textFieldCodigoPostal.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Codigo Postal tem que ser um preenchido!\n");
+                if (isNullOrEmpty(textFieldEmail.getText())){
+                    showError(me, "Email tem que ser preenchido!");
                     return;
                 }
-                if (nomeTextField.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Título tem que ser um preenchido!\n");
+                if (!isValidEmail(textFieldEmail.getText())) {
+                    showError(me, "Email tem que ter um formato válido!");
                     return;
                 }
-                if (textFieldNif.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Nif tem que ser um preenchido!\n");
+                if (isNullOrEmpty(textFieldCodigoPostal.getText())) {
+                    showError(me, "Código Postal tem que ser preenchido!");
                     return;
                 }
-                if (textFieldTel.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "O numero de telefone tem que ser um preenchido!\n");
+                if (isNullOrEmpty(nomeTextField.getText())) {
+                    showError(me, "Título tem que ser preenchido!");
                     return;
                 }
-                if (textFieldMorada.getText() == null){
-                    JOptionPane.showMessageDialog(me,
-                            "Morada tem que ser um preenchido!\n");
+                if (isNullOrEmpty(textFieldNif.getText())) {
+                    showError(me, "NIF tem que ser preenchido!");
+                    return;
+                }
+                if (!isValidNifCC(textFieldNif.getText())) {
+                    showError(me, "NIF/CC tem que conter mais que 9 caracteres  alfanumérico !");
+                    return;
+                }
+                if (isNullOrEmpty(textFieldTel.getText())) {
+                    showError(me, "O número de telefone tem que ser preenchido!");
+                    return;
+                }
+                if (!isValidNumber(textFieldTel.getText(), 9)) {
+                    showError(me, "O número de telefone tem que conter exatamente 9 dígitos!");
+                    return;
+                }
+                if (isNullOrEmpty(textFieldMorada.getText())) {
+                    showError(me, "Morada tem que ser preenchida!");
                     return;
                 }
 
@@ -137,7 +145,7 @@ public class EditarSocio extends JFrame{
                 Socio novoSocio = new Socio(nom,nif,morada,dist,cidade,codPost,tele, email,numSocio);
                 AppData.getInstance().editarSocio(novoSocio, antigo);
                 JOptionPane.showMessageDialog(null,
-                        "Socio criado com sucesso!\n");
+                        "Socio editado com sucesso!\n");
                 me.dispose();
                 SociosPage.showSocPage();
             }

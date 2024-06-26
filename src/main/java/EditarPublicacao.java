@@ -185,12 +185,35 @@ public class EditarPublicacao extends JFrame{
                     distribuidor = Distribuidor.valueOf(dis);
                 }catch (IllegalArgumentException exception){
                     JOptionPane.showMessageDialog(me,
-                            "Ocurreu um erro com os dropdowns!\n");
+                            "Ocurreu um erro com os dropdowns!\n","Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 Obra obra = new Obra(tit,listaut, gener,subgener, edit,numEdicao,anoo,is,estan,prat,salars,distribuidor);
-                AppData.getInstance().editarObra(obra,antiga);
+                int i = AppData.getInstance().editarObra(obra,antiga);
+                switch (i){
+                    case 1:
+                        JOptionPane.showMessageDialog(me,
+                                "Obra não encontrada!\n","Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+
+                    case 2:
+                        JOptionPane.showMessageDialog(me,
+                                "ISBN não pode ser repetido!\n","Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+
+                    case -1:
+                        JOptionPane.showMessageDialog(me,
+                                "Obra não existente!\n","Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    case 0:
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(me,
+                                "Ocurreu um erro!\n","Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+
+                }
                 JOptionPane.showMessageDialog(null,
                         "Obra editada com sucesso!\n");
                 VisualizarPublicacao.showVisPubPage(obra);

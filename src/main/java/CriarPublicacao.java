@@ -192,6 +192,11 @@ public class CriarPublicacao extends JFrame{
                     return;
                 } else if (answer == 1) {
                     JOptionPane.showMessageDialog(null,
+                            "ISBN tem de ser único!\n");
+                    return;
+                }
+                else if (answer == 2) {
+                    JOptionPane.showMessageDialog(null,
                             "A Obra já existe!\n");
                     return;
                 }

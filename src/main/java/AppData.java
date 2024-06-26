@@ -140,10 +140,8 @@ public class AppData implements Serializable{
         if (obra == null) {
             return -1;
         }
-        for (Obra obraExistente : obras) {
-            if (obraExistente.getISBN() == obra.getISBN()) {
-                return 1;
-            }
+        if (obras.contains(obra)){
+            return 2;
         }
         for (Obra obraexistente : obras) {
             if (obraexistente.getISBN().equals(obra.getISBN())) {
@@ -192,6 +190,11 @@ public class AppData implements Serializable{
         }
         if (!obras.contains(antiga)) {
             return 1;
+        }
+        for(Obra obra: obras){
+            if(obra.getISBN().equals(nova.getISBN()) && !obra.equals(antiga)){
+                return 2;
+            }
         }
         obras.get(obras.indexOf(antiga)).editar(nova);
         return 0;
